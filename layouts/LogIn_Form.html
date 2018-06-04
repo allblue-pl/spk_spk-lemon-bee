@@ -1,0 +1,36 @@
+<div class="login-info">
+    <form _elem="form" method="post" role="form" name="form" id="form" >
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-user fa-lg"></i>
+                </div>
+                <input _elem="login"
+                        placeholder="$lb.text('logIn_Login_Placeholder')"
+                        value="$login"
+                        type="text" required="" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                    <div class="input-group-addon">
+                    <i class="fa fa-lock fa-lg"></i>
+                </div>
+                    <input _elem="password"
+                        placeholder="$lb.text('logIn_Password_Placeholder')"
+                        value="$password"
+                        type="password" required="" class="form-control" />
+                </div>
+        </div>
+        <div _show="error.show" class="alert alert-danger">
+            <p>$error.message</p>
+            </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary mg-full">
+                $lb.text('logIn_LogIn')
+            </button>
+        </div>
+    </form>
+
+    <div _holder="notifications"></div>
+</div>
