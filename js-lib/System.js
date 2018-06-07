@@ -61,7 +61,7 @@ export default class System
         this._panels = new Map();
         this._module = new spocky.Module();
         this._module_Layout = new spocky.Layout([
-            [ '$', { _holder: 'content', } ],
+            [ 'div', { _holder: 'content', } ],
             [ 'div', { _holder: 'msgs', } ],
         ]);
         this._module.$view = this._module_Layout;
@@ -119,7 +119,7 @@ export default class System
             },
             images: {
                 logo: 'string',
-                msgs: js0.Preset({
+                messages: js0.Preset({
                     loading: 'string',
                     success: 'string',
                     failure: 'string',
@@ -166,36 +166,43 @@ export default class System
         this._uris = presets.uris;
         this._user = presets.user;
 
-        this.msgs = new spkMessages.Messages(this._images.msgs);
+        this.msgs = new spkMessages.Messages(this._images.messages);
         
         this._module_Layout.$holders.msgs.$view = this.msgs;
     }
 
     init()
     {
-        this.pager.page('main', this._aliases.main, () => {
-            if (!this._user.loggedIn) {
-                window.location = this._uris.base + this._aliases.logIn;
+        this.pager.page('lb.main', this._aliases.main, () => {
+            this._setPanelModule(new modules.Main(this, this._panels));
+        });
+        this.pager.page('lb.logIn', this._aliases.logIn, () => {
+            if (this._user.loggedIn) {                
+                this.pager.setPage('lb.main');
                 return;
             }
 
-            let body = new modules.Body(this);
-            body.setContent(new modules.Main(this, this._panels));
-
-            this._module_Layout.$holders.content.$view = body;
-        });
-        this.pager.page('logIn', this._aliases.logIn, () => {
             this._module_Layout.$holders.content.$view = new modules.LogIn(this);
         });
 
-        // for (let panel of this.panels) {
-        //     for (let subpanel of panel.subpanels) {
-        //         this.pager.page(panel.name, panel.uri + '/' + subpanel.uri, 
-        //                 () => {
-        //             this.module.$view = null;
-        //         });
-        //     }
-        // }
+        for (let [ panelName, panel ] of this._panels) {
+            this.pager.page(`lb.panels.${panel.name}`, panel.alias, () => {
+                if (panel.subpanels.size === 0)
+                    throw new Error(`No subpanels in panel '${panelName}'.`);
+
+                let defaultSubpanel = panel.subpanels.values().next().value;
+
+                this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`);
+                // window.location = `${this._uris.base}${panel.alias}/${defaultSubpanel.alias}`;
+            });
+
+            for (let [ subpanelName, subpanel ] of panel.subpanels) {
+                this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
+                        `${panel.alias}/${subpanel.alias}/`, () => {
+                    this._setPanelModule(new subpanel.module(this));
+                });
+            }
+        }
 
         this._initialized = true;
     }
@@ -227,6 +234,20 @@ export default class System
         }
 
         this._panels.set(panel.name, pPanel);
+    }
+
+    _setPanelModule(module)
+    {
+        if (!this._user.loggedIn) {
+            this.pager.setPage('lb.logIn');
+            window.location = this._uris.base + this._aliases.logIn;
+            return;
+        }
+
+        let body = new modules.Body(this);
+        body.setContent(module);
+
+        this._module_Layout.$holders.content.$view = body;
     }
 
 }

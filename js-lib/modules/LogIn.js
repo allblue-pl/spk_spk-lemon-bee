@@ -15,7 +15,7 @@ export default class LogIn extends spocky.Module
     { super();
         js0.args(arguments, require('../System'));
 
-        this.sys = system;
+        this.lb = system;
 
         this.l = system.createLayout($layouts.LogIn);
         this.lForm = system.createLayout($layouts.LogIn_Form);
@@ -46,27 +46,26 @@ export default class LogIn extends spocky.Module
 
     logIn()
     {
-        this.sys.msgs.showLoading();
+        this.lb.msgs.showLoading();
 
-        abApi.json(this.sys.uris.api, {
-            login: this.lForm.$elems.login.value,
-            password: this.lForm.$elems.password.value,
+        abApi.json(`${this.lb.uris.api}log-in`, {
+            Login: this.lForm.$elems.login.value,
+            Password: this.lForm.$elems.password.value,
                 }, (result) => {
             if (result.isSuccess())
-                window.location = this.sys.uris.base;
+                window.location = this.lb.uris.base;
             else if (result.isFailure()) {
-                this.lForm.error = {
-                    show: true,
-                    message: this.sys.text('logIn_LogIn_Failed'),
-                };
-                this.sys.msg.finishLoading();
-            } else {
-                console.warn(result);
                 this.lForm.$fields.error = {
                     show: true,
-                    message: this.sys.text('Users:logIn_LogIn_Error'),
+                    message: this.lb.text('logIn_LogIn_Failed'),
                 };
-                this.sys.msgs.hideLoading();
+                this.lb.msgs.hideLoading();
+            } else {
+                this.lForm.$fields.error = {
+                    show: true,
+                    message: this.lb.text('Users:logIn_LogIn_Error'),
+                };
+                this.lb.msgs.hideLoading();
             }
         });
     }

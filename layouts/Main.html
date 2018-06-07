@@ -20,13 +20,13 @@
         <h1>
             Main title: $title
             <span _show="panel.show">Show</span>
-            <a class="btn btn-default mg-full" href="${lb.uris.base}${panel.alias}">
+            <a class="btn btn-default mg-full" href="${lb.uris.base}${panel.alias}/">
                 <img _show="panel.image" src="$panel.image" alt="$panel.title" />
                 $panel.title
             </a>
         </h1>
         <div _repeat="panel.subpanels:subpanel" class="lb-menu-item $subpanel.class">
-            <a href="${lb.uris.base}${panel.alias}/${subpanel.alias}" class="btn btn-default mg-full">
+            <a href="${lb.uris.base}${panel.alias}/${subpanel.alias}/" class="btn btn-default mg-full">
                 <i class="fa $subpanel.faIcon"></i><br />
                 $subpanel.title
             </a>
