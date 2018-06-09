@@ -25,12 +25,13 @@
 		.alert {
 			margin-bottom: 15px;
 			padding: 8px;
+
 		}
 	}
 
 	.lb-login-logo {
 		height: 100%;
-		border-right: 1px solid $gray-lighter;
+		border-right: 1px solid $gray-300;
 		background-image: url('../images/logo_background.png');
 		background-size: 100% 100%;
 
@@ -46,9 +47,11 @@
 	.lb-login-form {
 		height: 100%;
 		padding-top: 10px;
-
 	}
 
+	.lb-povered-by {
+		background-color: transparent;
+	}
 }
 
 /* Main system panel */
@@ -57,7 +60,8 @@
  }
 
  .lb-topbar {
-	 border-bottom: 1px solid $gray-lightest;
+	 background-color: $lb-topbar-bg;
+	 border-bottom: 1px solid $gray-500;
  }
 
  /* logo */
@@ -66,9 +70,8 @@
  	overflow: hidden;
 
  	h2 {
- 		@extend .text-center;
-		@extend .mg-no-margin;
-		 
+ 		text-align: center;
+		margin: 0px;
  		line-height: $lb-topbar-height;
  	}
 
@@ -98,28 +101,18 @@
 	color: #fff;
 	width: 100%;
 	text-align: right;
+	background-color: $lb-povered-by-bg;
 
 	a {
-		color: $brand-success;
-	}
-
-	a.text-primary {
-		color: $brand-primary;
+		color: $lb-povered-by-link;
 	}
 }
-
 
 /* MEDIA */
-@include media-breakpoint-down(md) {
-	.lb-login {
-		.lb-login-content {
-			height: 400px;
-		}
-	}
-}
-
 @include media-breakpoint-down(sm) {
 	.lb-login {
+		align-self: top;
+		margin: 15px;
 		.lb-login-content {
 			height: auto;
 		}
@@ -128,9 +121,8 @@
 			padding-top: 10px;
 			padding-bottom: 10px;
 			border-right-width: 0px;
-			border-bottom: 1px solid $gray-lighter;
-			//background: none;
-
+			border-bottom: 1px solid $gray-300;
+			
 			img {
 				position: relative;
 				max-height: 90%;

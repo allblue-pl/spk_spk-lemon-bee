@@ -29,13 +29,13 @@ table {
 			border-radius: 0px;
 		}
 		th:hover {
-			background-color: darken($brand-secondary, 5%)!important;
+			background-color: darken(red, 5%)!important;
 		}
 		td.active {
-			background-color: $brand-primary;
+			background-color: $primary;
 		}
 		td.active:hover {
-			background-color: darken($brand-primary, 10%);
+			background-color: darken($primary, 10%);
 		}
 	}
 }

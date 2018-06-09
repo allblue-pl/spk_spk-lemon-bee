@@ -1,41 +1,19 @@
 /* Common LemonBee Styles */
-/* back to top */
-.lb-back-to-top {
-	margin-bottom: 15px;
-}
-
 /* backgrounds */
-.lb-bg-black {
-	background-color: $lb-black;
-}
-
-.lb-bg-blue-steel {
-	background-color: $lb-blue-steel;
-}
-
 .lb-bg-gray {
-	background-color: $lb-gray;
+	background-color: $gray-500;
 }
 
-.lb-bg-gray-blue-dark {
-	background-color: $lb-gray-blue-dark;
-}
-
-.lb-bg-gray-dark {
-	background-color: $lb-gray-dark;
+.lb-bg-gray-light {
+	background-color: $gray-300;
 }
 
 .lb-bg-gray-lightest {
-	background-color: $gray-lightest;
+	background-color: $gray-100;
 }
 
 .lb-bg-white {
 	background-color: #fff;
-}
-
-/* body */
-body {
-	// @extend .lb-bg-gray-lightest;
 }
 
 /* buttons */
@@ -53,10 +31,6 @@ body {
 				margin-right:8px;
 			}
 		}
-
-	.lb-back-button {
-
-	}
 }
 
 .lb-btn-gray-blue {
@@ -84,7 +58,7 @@ body {
 .lb-btn-tab-default {
 	@extend .btn-outline-secondary;
 
-	background-color: $gray-lightest;
+	background-color: violet;
 }
 
 .lb-btn-tab-default.selected {
@@ -113,6 +87,14 @@ input[type="checkbox"] {
   box-shadow: none !important;
   @extend .float-left;
   width: 30px;
+}
+
+/* fonts awesome */
+.i-left {
+	padding-right: $lb-font-awesome-padding;
+}
+.i-right {
+	padding-left: $lb-font-awesome-padding;
 }
 
 /* forms */
@@ -156,25 +138,6 @@ label {
 	text-align: left; /* force form labels to float left */
 }
 
-/* overrides for Bootstrap */
-/* menu */
-.navbar {
-	margin-bottom: 0px;
-}
-
-.nav-pills > li > a {
-	border-radius: 0px;
-}
-
-.nav > li > a:hover, .nav > li > a:focus {
-	background-color: $gray-lightest;
-}
-
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-	background-color: $lb-blue-lighter;
-	color: $primary;
-}
-
 /* previews */
 .lb-preview-image {
 	margin-bottom: 20px;
@@ -192,20 +155,6 @@ label {
 .clickable {
 	cursor: pointer;
 	cursor: hand;
-}
-
-/* system statistics ?!?!?!???!?!?!?!?!?!?! */
-.lb-stats {
-	> div {
-		height: 120px;
-		margin-bottom: 10px;
-
-		img {
-			position: absolute;
-
-			height: 60px;
-		}
-	}
 }
 
 
@@ -236,7 +185,6 @@ label {
 
 		h2 {
 			margin: 0px;
-			color: $text-color;
 		}
 	}
 }

@@ -3,20 +3,22 @@
 	height: $lb-topbar-height;
 	text-align: right;
 	line-height: $lb-topbar-height;
+	color: $lb-blue-light;
+
+	a {
+		color: #fff;
+	}
+
+	i {
+		color: $lb-blue-light;
+	}
 
 	img {
 		display: inline;
 		max-height: $lb-topbar-height - 20px;
 	}
 
-	a {
-		color: #fff;
-	}
-}
-
-/* media */
-@include media-breakpoint-down(sm) {
-	.lb-user-info {
+	@include media-breakpoint-down(sm) {
 		height: auto;
 		text-align: left;
 	}

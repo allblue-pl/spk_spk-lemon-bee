@@ -1,16 +1,13 @@
 
-<h1>Body</h1>
-
 <!-- <div class="mg-fill-screen lb-background-main"></div>  -->
-<div class="lb-content $panelClass">
+<div class="lb-content $panelClass container-fluid">
+    <!-- Side Menu Background
+    <div class="col-lg-2 col-sm-3 mg-absolute lb-bg-white"
+            style="top:0;bottom:0;left:0;right:0;"></div>-->
 
-    <!-- Side Menu Background -->
-    <div class="col-lg-2 col-sm-3 mg-absolute lb-bg-white" 
-            style="top:0;bottom:0;left:0;right:0;"></div>
-
-    <div class="mg-relative lb-topbar">
+    <div class="lb-topbar row">
         <!-- Logo -->
-        <div class="col-lg-2 col-sm-3 mg-bg-white">
+        <div class="col-xl-2 col-md-3">
             <div class="lb-logo">
                 <a href="$lb.uris.base">
                     <img src="$lb.images.logo" alt="logo" />
@@ -19,28 +16,30 @@
         </div>
 
         <!-- User Info -->
-        <div class="col-lg-10 col-sm-9 bg-primary">
+        <div class="col-xl-10 col-md-9 ">
             <$ _holder="userInfo" />
         </div>
         <div class="mg-clear"></div>
     </div>
-    <!-- side menu -->
-    <div class="col-lg-2 col-sm-3 mg-no-padding-horizontal">
-        <$ _holder="topMenu" />
-    </div>
+    <div class="row">
+        <!-- side menu -->
+        <div class="col-xl-2 col-md-3 mg-no-padding-horizontal lb-bg-gray-light">
+            <$ _holder="topMenu" />
+        </div>
 
-    <!-- main content -->
-    <div class="col-lg-10 col-sm-9 lb-bg-gray-lightest" style="min-height: 800px;">
-        <$ _holder="content" />
-        <div class="backToTop mg-spacer-top">
-            <hr />
-            <a id="backToTop" class="spScrollToTop lb-back-to-top btn btn-default" href="">
-                $lb.text('backToTop') <i class="fa fa-chevron-up"></i>
-            </a>
+        <!-- main content -->
+        <div class="col-xl-10 col-md-9 lb-bg-gray-lightest" style="min-height: 800px;">
+            <$ _holder="content" />
+            <div class="backToTop mg-spacer-top">
+                <hr />
+                <a id="backToTop" class="spScrollToTop btn btn-outline-secondary" href="">
+                    $lb.text('backToTop') <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
         </div>
     </div>
     <div class="mg-clear"></div>
-    <div class="lb-povered-by pull-right bg-primary">
-        Powered by <a href="http://allblue.pl">AllBlue</a>
-    </div>
+</div>
+<div class="lb-povered-by pull-right">
+    Powered by &nbsp;<a href="http://allblue.pl">AllBlue</a>
 </div>

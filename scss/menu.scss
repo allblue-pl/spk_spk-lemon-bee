@@ -1,17 +1,17 @@
 
 /* Top menu */
 .lb-menu-top {
-	padding-top: 14px;
-	padding-bottom: 14px;
-	a {
-		font-size: 18px;
-		border-bottom: 1px solid $gray-lighter;
-	}
-
 	img {
 		display: inline;
 		max-width: 50px !important;
 		margin-right: 5px;
+	}
+	.navbar-nav {
+		display: inline-block;
+		width: 100%;
+	}
+	li {
+		border-bottom: 1px solid $gray-400;
 	}
 }
 
