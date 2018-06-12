@@ -113,26 +113,26 @@ export default class System
     setup(presets)
     {
         js0.args(arguments, js0.Preset({
-            aliases: {
+            aliases: js0.Preset({
                 main: 'string',
                 logIn: 'string',
-            },
-            images: {
-                logo: 'string',
+            }),
+            images: js0.Preset({
+                logo: [ 'string', js0.Default(null), ],
                 messages: js0.Preset({
-                    loading: 'string',
-                    success: 'string',
-                    failure: 'string',
+                    loading: [ 'string', js0.Default(null), ],
+                    success: [ 'string', js0.Default(null), ],
+                    failure: [ 'string', js0.Default(null), ],
                 }),
-            },
+            }),
             panels: js0.PresetArray({
                 permissions: [ js0.Default([]), Array ],
     
                 name: 'string',
                 alias: 'string',
                 title: 'string',
-                faIcon: [ js0.Default(null), 'string' ],
-                image: [ js0.Default(null), 'string' ],
+                faIcon: [ 'string', js0.Default(null), ],
+                image: [ 'string', js0.Default(null), ],
                 
                 subpanels: js0.PresetArray({
                     name: 'string',
@@ -149,6 +149,7 @@ export default class System
             texts: 'object',
             uris: js0.Preset({
                 base: [ 'string', js0.Default('/') ],
+                package: [ 'string', js0.Default('/dev/node_modules/spk-lemon-bee/') ],
                 api: [ 'string' ],
             }),
             user: js0.Preset({
@@ -165,6 +166,15 @@ export default class System
             this._addPanel(panel);
         this._uris = presets.uris;
         this._user = presets.user;
+
+        if (this._images.logo === null)
+            this._images.logo = `${this._uris.package}images/logo.png`;
+        for (let messageType in this._images.messages) {
+            if (this._images.messages[messageType] === null) {
+                let ext = messageType === 'loading' ? 'gif' : 'png';
+                this._images.messages[messageType] = `${this._uris.package}images/messages/${messageType}.${ext}`;
+            }
+        }
 
         this.msgs = new spkMessages.Messages(this._images.messages);
         
@@ -198,7 +208,7 @@ export default class System
 
             for (let [ subpanelName, subpanel ] of panel.subpanels) {
                 this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
-                        `${panel.alias}/${subpanel.alias}/`, () => {
+                        `${panel.alias}/${subpanel.alias}`, () => {
                     this._setPanelModule(new subpanel.module(this));
                 });
             }
@@ -210,7 +220,7 @@ export default class System
     text(text)
     {
         if (text in this._texts)
-        return this._texts[text];
+            return this._texts[text];
 
         return `#${text}#`;
     }
@@ -224,12 +234,18 @@ export default class System
                 pPanel.subpanels = new Map();
                 for (let subpanel of panel.subpanels) {
                     let pSubpanel = {};
-                    for (let sKey in subpanel)
-                        pSubpanel[sKey] = subpanel[sKey];
+                    for (let sKey in subpanel) {
+                        if (sKey === 'alias')
+                            pSubpanel[sKey] = encodeURIComponent(subpanel[sKey]);
+                        else
+                            pSubpanel[sKey] = subpanel[sKey];
+                    }
 
-                        pPanel.subpanels.set(subpanel.name, pSubpanel);
+                    pPanel.subpanels.set(subpanel.name, pSubpanel);
                 }
-            } else
+            } else if (pKey === 'alias')
+                pPanel[pKey] = encodeURIComponent(panel[pKey]);
+            else
                 pPanel[pKey] = panel[pKey];
         }
 
