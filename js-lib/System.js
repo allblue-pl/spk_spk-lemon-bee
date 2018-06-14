@@ -162,8 +162,6 @@ export default class System
         this._aliases = presets.aliases;
         this._images = presets.images;
         this._texts = presets.texts;
-        for (let panel of presets.panels)
-            this._addPanel(panel);
         this._uris = presets.uris;
         this._user = presets.user;
 
@@ -175,6 +173,9 @@ export default class System
                 this._images.messages[messageType] = `${this._uris.package}images/messages/${messageType}.${ext}`;
             }
         }
+
+        for (let panel of presets.panels)
+            this._addPanel(panel);
 
         this.msgs = new spkMessages.Messages(this._images.messages);
         
@@ -235,11 +236,10 @@ export default class System
                 for (let subpanel of panel.subpanels) {
                     let pSubpanel = {};
                     for (let sKey in subpanel) {
-                        if (sKey === 'alias')
-                            pSubpanel[sKey] = encodeURIComponent(subpanel[sKey]);
-                        else
-                            pSubpanel[sKey] = subpanel[sKey];
+                        pSubpanel[sKey] = subpanel[sKey];
                     }
+
+                    pSubpanel.uri = this.pager.getUri(`${panel.alias}/${pSubpanel.alias}`);
 
                     pPanel.subpanels.set(subpanel.name, pSubpanel);
                 }
@@ -248,6 +248,8 @@ export default class System
             else
                 pPanel[pKey] = panel[pKey];
         }
+
+        pPanel.uri = this.pager.getUri(panel.alias);
 
         this._panels.set(panel.name, pPanel);
     }
