@@ -70,6 +70,11 @@ export default class System
         this.msgs = null;
     }
 
+    clear()
+    {
+        this.msgs.hide();
+    }
+
     createLayout(layoutClass)
     {
         let l = new layoutClass();
@@ -143,7 +148,9 @@ export default class System
                     alias: 'string',
                     title: 'string',
                     faIcon: [ js0.Default(null), 'string' ],
-                    image: [ js0.Default(null), 'string' ],     
+                    image: [ js0.Default(null), 'string' ],    
+
+                    shortcut: [ js0.Default(true), 'boolean' ],
                 }),
             }),
             texts: 'object',
@@ -185,10 +192,12 @@ export default class System
     init()
     {
         this.pager.page('lb.main', this._aliases.main, () => {
+            this.clear();
             this._setPanelModule(new modules.Main(this, this._panels));
         });
         this.pager.page('lb.logIn', this._aliases.logIn, () => {
             if (this._user.loggedIn) {                
+                this.clear();
                 this.pager.setPage('lb.main');
                 return;
             }
@@ -203,6 +212,7 @@ export default class System
 
                 let defaultSubpanel = panel.subpanels.values().next().value;
 
+                this.clear();
                 this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`);
                 // window.location = `${this._uris.base}${panel.alias}/${defaultSubpanel.alias}`;
             });
@@ -210,6 +220,7 @@ export default class System
             for (let [ subpanelName, subpanel ] of panel.subpanels) {
                 this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
                         `${panel.alias}/${subpanel.alias}`, () => {
+                    this.clear();
                     this._setPanelModule(new subpanel.module(this));
                 });
             }
@@ -239,7 +250,10 @@ export default class System
                         pSubpanel[sKey] = subpanel[sKey];
                     }
 
-                    pSubpanel.uri = this.pager.getUri(`${panel.alias}/${pSubpanel.alias}`);
+                    if (pSubpanel.shortcut)
+                        pSubpanel.uri = this.pager.getUri(`${panel.alias}/${pSubpanel.alias}`);
+                    else
+                        pSubpanel.uri = null;
 
                     pPanel.subpanels.set(subpanel.name, pSubpanel);
                 }

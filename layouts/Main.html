@@ -23,12 +23,14 @@
                 $panel.title
             </a>
         </h1>
-        <div _repeat="panel.subpanels:subpanel" class="lb-menu-item $subpanel.class">
-            <a href="$subpanel.uri" class="btn btn-default mg-full">
-                <i class="fa $subpanel.faIcon"></i><br />
-                $subpanel.title
-            </a>
-        </div>
+        <_ _repeat="panel.subpanels:subpanel">
+            <div _show="subpanel.shortcut" class="lb-menu-item $subpanel.class">
+                <a href="$subpanel.uri" class="btn btn-default mg-full">
+                    <i class="fa $subpanel.faIcon"></i><br />
+                    $subpanel.title
+                </a>
+            </div>
+        </_>
     </div>
 </div>
 <div class="mg-clear"></div>
