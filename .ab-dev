@@ -1,5 +1,12 @@
 {
     "links": [
-        "ab-fields": "https://github.com/allblue-pl/web-js_ab-fields"
+        "ab-fields": "https://github.com/allblue-pl/js_ab-fields",
+        "ab-layouts": "https://github.com/allblue-pl/web-js_ab-layouts",
+        "ab-nodes": "https://github.com/allblue-pl/web-js_ab-nodes",
+        "ab-pager": "https://github.com/allblue-pl/web-js_ab-pager",
+        "js0": "https://github.com/allblue-pl/js_js0",
+        "spk-messages": "https://github.com/allblue-pl/spk_spk-messages",
+        "spocky": "https://github.com/allblue-pl/web-js_spocky",
+        "web-ab-api": "https://github.com/allblue-pl/web-js_web-ab-api",
     ]
 }
