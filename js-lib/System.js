@@ -231,6 +231,8 @@ export default class System
 
     text(text)
     {
+        console.log(this._texts);
+
         if (text in this._texts)
             return this._texts[text];
 
