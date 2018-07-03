@@ -196,7 +196,7 @@ export default class System
             this._setPanelModule(new modules.Main(this, this._panels));
         });
         this.pager.page('lb.logIn', this._aliases.logIn, () => {
-            if (this._user.loggedIn) {                
+            if (this._user.loggedIn) {               
                 this.clear();
                 this.pager.setPage('lb.main');
                 return;
