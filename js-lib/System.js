@@ -251,7 +251,7 @@ export default class System
                     }
 
                     if (pSubpanel.shortcut)
-                        pSubpanel.uri = this.pager.getUri(`${panel.alias}/${pSubpanel.alias}`);
+                        pSubpanel.uri = this.pager.parseUri(`${panel.alias}/${pSubpanel.alias}`);
                     else
                         pSubpanel.uri = null;
 
@@ -263,7 +263,7 @@ export default class System
                 pPanel[pKey] = panel[pKey];
         }
 
-        pPanel.uri = this.pager.getUri(panel.alias);
+        pPanel.uri = this.pager.parseUri(panel.alias);
 
         this._panels.set(panel.name, pPanel);
     }
