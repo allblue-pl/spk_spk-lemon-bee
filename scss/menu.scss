@@ -17,29 +17,24 @@
 
 /* Main menu */
 .lb-menu-main {
-	h1 {
+	.main-tile {
 		margin: 0px;
-		margin-bottom: 5px;
-
-		a {
-			padding-top: 30px;
-			padding-bottom: 30px;
-			font-size: 30px;
-			font-weight: 200;
-		}
-
-		a:hover {
-			text-decoration: none;
-		}
-
+		padding: 40px 10px;
+		font-size: 24px;
 		img {
 			margin: auto;
 			max-width: 100px;
 		}
 	}
-
-	.lb-menu-item {
-		padding: 5px;
+	.sub-tile-holder {
+		margin: 0 -5px;
+	}
+	.sub-tile {
+		padding: 10px 5px;
+		float: left;
+		.btn {
+			margin: 0px;
+		}
 	}
 }
 
@@ -57,17 +52,6 @@
 }
 
 @include media-breakpoint-down(lg) {
-	.lb-menu-main {
-		h1 {
-			a {
-				font-size: 25px;
-			}
-
-			img {
-				max-width: 80px;
-			}
-		}
-	}
 	.lb-menu-top {
 		a {
 			font-size: 18px;

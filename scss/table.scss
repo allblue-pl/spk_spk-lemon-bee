@@ -1,17 +1,24 @@
 /* Tables */
 table {
-	font-size: 16px;
-	th {
-		background-color: #204e56;
+	@extend .table-hover;
+	a {
+		color: $gray-600;
+	}
+	a:hover {
+		color: #000;
+	}
+	thead {
+		background-color: $primary;
 		color: #fff;
-		border-radius: 0px;
 
 		a {
 			color: #fff;
-			font-weight: 400;
+			font-weight: normal!important;
+		}
+		a:hover {
+			color: $gray-300;
 		}
 	}
-
 	tr {
 		td.narrow {
 			input {
