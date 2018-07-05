@@ -32,17 +32,21 @@ table {
 /* calnedar */
 .input-group {
 	table {
+		text-shadow: none!important;
 		th {
 			border-radius: 0px;
 		}
 		th:hover {
-			background-color: darken(red, 5%)!important;
+			background-color: darken($primary, 5%)!important;
 		}
 		td.active {
-			background-color: $primary;
+			background-color: $lb-blue-light;
+			color: #000;
+			text-shadow: none;
 		}
 		td.active:hover {
-			background-color: darken($primary, 10%);
+			background-color: darken($lb-blue-light, 10%);
+			color: #fff;
 		}
 	}
 }
