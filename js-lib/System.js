@@ -130,16 +130,17 @@ export default class System
                     failure: [ 'string', js0.Default(null), ],
                 }),
             }),
-            panels: js0.PresetArray({
+            panels: js0.Iterable(js0.Preset({
                 permissions: [ js0.Default([]), Array ],
     
                 name: 'string',
+                shortcut: [ 'boolean', js0.Default(true), ],
                 alias: 'string',
                 title: 'string',
                 faIcon: [ 'string', js0.Default(null), ],
                 image: [ 'string', js0.Default(null), ],
                 
-                subpanels: js0.PresetArray({
+                subpanels: js0.Iterable(js0.Preset({
                     name: 'string',
                     module: 'function',
     
@@ -151,8 +152,8 @@ export default class System
                     image: [ js0.Default(null), 'string' ],    
 
                     shortcut: [ js0.Default(true), 'boolean' ],
-                }),
-            }),
+                })),
+            })),
             texts: 'object',
             uris: js0.Preset({
                 base: [ 'string', js0.Default('/') ],
@@ -246,12 +247,11 @@ export default class System
                 pPanel.subpanels = new Map();
                 for (let subpanel of panel.subpanels) {
                     let pSubpanel = {};
-                    for (let sKey in subpanel) {
+                    for (let sKey in subpanel)
                         pSubpanel[sKey] = subpanel[sKey];
-                    }
 
-                    if (pSubpanel.shortcut)
-                        pSubpanel.uri = this.pager.parseUri(`${panel.alias}/${pSubpanel.alias}`);
+                    if (panel.shortcut && subpanel.shortcut)
+                        pSubpanel.uri = this.pager.parseUri(`${panel.alias}/${subpanel.alias}`);
                     else
                         pSubpanel.uri = null;
 
@@ -262,7 +262,6 @@ export default class System
             else
                 pPanel[pKey] = panel[pKey];
         }
-
         pPanel.uri = this.pager.parseUri(panel.alias);
 
         this._panels.set(panel.name, pPanel);

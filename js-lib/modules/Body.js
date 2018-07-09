@@ -41,6 +41,9 @@ export default class Body extends spocky.Module
         let items = [];
         let panels = this.system.getPanels();
         for (let panel of panels) {
+            if (!panel.shortcut)
+                continue;
+
             items.push({
                 uri: `${this.system.uris.base}${panel.alias}/`,
                 title: panel.title,
