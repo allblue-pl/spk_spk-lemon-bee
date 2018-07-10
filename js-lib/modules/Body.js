@@ -3,6 +3,7 @@
 const
     js0 = require('js0'),
     spocky = require('spocky'),
+    webABApi = require('web-ab-api'),
 
     $layouts = require('../$layouts')
 ;
@@ -17,9 +18,24 @@ export default class Body extends spocky.Module
         this.system = system;
 
         let l = system.createLayout($layouts.Body);
+        let lMenu = this._getMenuLayout();
+        let lUserInfo = this._getUserInfoLayout();
 
-        l.$holders.topMenu.$view = this._getMenuLayout();
-        l.$holders.userInfo.$view = this._getUserInfoLayout();
+        l.$elems.backToTop.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+        });
+
+        lUserInfo.$elems.logOut.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            system.msgs.showLoading();
+            webABApi.json(system.uris.api + 'log-out', {}, (result) => {
+                window.location = system.uris.base;
+            });
+        });
+
+        l.$holders.topMenu.$view = lMenu;
+        l.$holders.userInfo.$view = lUserInfo;
 
         this.layout = l;
 

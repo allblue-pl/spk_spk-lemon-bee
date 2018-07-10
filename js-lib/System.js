@@ -124,6 +124,7 @@ export default class System
             }),
             images: js0.Preset({
                 logo: [ 'string', js0.Default(null), ],
+                logo_Main: [ 'string', js0.Default(null), ],
                 messages: js0.Preset({
                     loading: [ 'string', js0.Default(null), ],
                     success: [ 'string', js0.Default(null), ],
@@ -175,6 +176,9 @@ export default class System
 
         if (this._images.logo === null)
             this._images.logo = `${this._uris.package}images/logo.png`;
+        if (this._images.logo_Main === null)
+            this._images.logo_Main = `${this._uris.package}images/logo_main.png`;
+        console.log(this._images);
         for (let messageType in this._images.messages) {
             if (this._images.messages[messageType] === null) {
                 let ext = messageType === 'loading' ? 'gif' : 'png';
