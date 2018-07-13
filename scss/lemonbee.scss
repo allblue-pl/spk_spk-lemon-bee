@@ -85,8 +85,9 @@ input[type="checkbox"] {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
-  @extend .float-left;
+  float: left;
   width: 30px;
+  margin-top: 8px;
 }
 
 /* fonts awesome */

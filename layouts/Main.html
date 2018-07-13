@@ -2,21 +2,21 @@
 <!-- Main menu panel -->
 <!-- System header -->
 <div class="lb-header">
-	<h2>
+	<!-- <h2>
 		<img ab-show="image" alt="title" src="{{image}}" />
 		<i ab-hide="image" class="fa {{faIcon}}"></i>
-	</h2>
+	</h2> -->
 </div>
 <!-- Main categories -->
-<div class="lb-menu-main mg-spacer-top-s row">
-    <div _repeat="panels:panel" _show="panel.shortcut" class="col-lg-4 col-md-6 $class">
-        <a class="btn btn-secondary mg-full main-tile" href="${lb.uris.base}${panel.alias}/">
+<div class="lb-menu-main mt-3 row">
+    <div _repeat="panels:panel" _show="panel.shortcut" class="col-lg-4 col-md-6 mt-4 $class">
+        <a class="btn btn-primary mg-full main-tile" href="${lb.uris.base}${panel.alias}/">
             <img _show="panel.image" src="$panel.image" alt="$panel.title" />
             $panel.title
         </a>
 		<div class="sub-tile-holder">
 			<div  _repeat="panel.subpanels:subpanel" _show="subpanel.shortcut" class="col-md-6 sub-tile">
-				<a href="$subpanel.uri" class="btn btn-outline-secondary mg-full">
+				<a href="$subpanel.uri" class="btn btn-outline-primary mg-full">
 					<i class="fa $subpanel.faIcon"></i><br />
 					$subpanel.title
 				</a>
