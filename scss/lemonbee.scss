@@ -79,16 +79,13 @@
 
 /* checkbox */
 /* stop checkbox from glowing */
-input[type="checkbox"] {
-  outline: none;
-  border: none !important;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  box-shadow: none !important;
-  float: left;
-  width: 30px;
-  margin-top: 8px;
-}
+// input[type="checkbox"] {
+//   outline: none;
+//   border: none !important;
+//   -webkit-box-shadow: none !important;
+//   -moz-box-shadow: none !important;
+//   box-shadow: none !important;
+// }
 
 /* fonts awesome */
 .i-left {
