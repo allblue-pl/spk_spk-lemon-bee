@@ -119,6 +119,7 @@ export default class System
     {
         js0.args(arguments, js0.Preset({
             aliases: js0.Preset({
+                account: 'string',
                 main: 'string',
                 logIn: 'string',
             }),
@@ -199,6 +200,8 @@ export default class System
             this.clear();
             this._setPanelModule(new modules.Main(this, this._panels));
         });
+        this._uris.main = this.pager.getPageUri('lb.main');
+
         this.pager.page('lb.logIn', this._aliases.logIn, () => {
             if (this._user.loggedIn) {               
                 this.clear();
@@ -208,6 +211,13 @@ export default class System
 
             this._module_Layout.$holders.content.$view = new modules.LogIn(this);
         });
+        
+        this.pager.page('lb.account', this._aliases.account, () => {
+            this.clear();
+            this._setPanelModule(new modules.Account(this, this._panels));
+        });
+        this._uris.account = this.pager.getPageUri('lb.account');
+
 
         for (let [ panelName, panel ] of this._panels) {
             this.pager.page(`lb.panels.${panel.name}`, panel.alias, () => {
