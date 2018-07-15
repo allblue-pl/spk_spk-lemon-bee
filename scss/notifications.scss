@@ -18,7 +18,7 @@
 		.abn_message_content {
 			position: relative;
 			align-self: center;
-			padding: 10px;
+			padding: 15px;
 			img {
 				max-width: 100%;
 				margin-bottom: 10px;
@@ -27,7 +27,7 @@
 
 		.abn_message_background {
 			background-color: #fff;
-			border: 1px solid red;
+			border: 1px solid $gray-500;
 			box-shadow: 0px 0px 10px gray;
 		}
 	}
