@@ -75,7 +75,7 @@ export default class Body extends spocky.Module
         let l = this.system.createLayout($layouts.UserInfo);
 
         l.$fields.lb = this.system.getFields();
-        l.$fields.login = 'Test';
+        l.$fields.login = this.system.user.login;
 
         return l;
     }

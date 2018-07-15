@@ -34,6 +34,13 @@ export default class System
         return this._uris;
     }
 
+    get user() {
+        if (!this._initialized)
+            throw new Error('LemonBee system not initialized.');
+
+        return this._user;
+    }
+
 
     constructor(pager)
     {
