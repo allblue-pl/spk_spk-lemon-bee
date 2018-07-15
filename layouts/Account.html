@@ -12,21 +12,21 @@
 
 <div class="panel-content">
     <form>
-            <spk-form-field form="ChangePassword" name="Password" type="Input" 
-                    input-type="password" label="$lb.text('labels_Password')"
-                    placeholder="$lb.text('labels_Password')..." />
-        
-            <spk-form-field form="ChangePassword" name="NewPassword" type="Input" 
-                    input-type="password" label="$lb.text('labels_NewPassword')"
-                    placeholder="$lb.text('labels_NewPassword')..." />
-        
-            <spk-form-field form="ChangePassword" name="NewPassword_Confirmation" type="Input" 
-                    input-type="password" placeholder="$lb.text('labels_NewPassword_Confirmation')..." />
-        
-            <div _show="message" class="alert alert-$messageType">$message</div>
-        
-            <button type="submit" _elem="changePassword" href="" class="btn btn-primary">
-                $lb.text('buttons_Save')
-            </button>
-        </form>
+        <spk-form-field form="ChangePassword" name="Password" type="Input" 
+                input-type="password" label="$lb.text('labels_Password')"
+                placeholder="$lb.text('labels_Password')..." />
+    
+        <spk-form-field form="ChangePassword" name="NewPassword" type="Input" 
+                input-type="password" label="$lb.text('labels_NewPassword')"
+                placeholder="$lb.text('labels_NewPassword')..." />
+    
+        <spk-form-field form="ChangePassword" name="NewPassword_Confirmation" type="Input" 
+                input-type="password" placeholder="$lb.text('labels_NewPassword_Confirmation')..." />
+    
+        <div _show="message" class="alert alert-$messageType">$message</div>
+    
+        <button type="submit" _elem="changePassword" href="" class="btn btn-primary">
+            $lb.text('buttons_Save')
+        </button>
+    </form>
 </div>
