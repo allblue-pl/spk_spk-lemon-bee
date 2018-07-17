@@ -57,13 +57,13 @@ export default class LogIn extends spocky.Module
             else if (result.isFailure()) {
                 this.lForm.$fields.error = {
                     show: true,
-                    message: this.lb.text('logIn_LogIn_Failed'),
+                    message: this.lb.text('errors_LogInFailed'),
                 };
                 this.lb.msgs.hideLoading();
             } else {
                 this.lForm.$fields.error = {
                     show: true,
-                    message: this.lb.text('Users:logIn_LogIn_Error'),
+                    message: this.lb.text('errors_LogInError'),
                 };
                 this.lb.msgs.hideLoading();
             }
