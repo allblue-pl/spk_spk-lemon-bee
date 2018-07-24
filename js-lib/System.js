@@ -234,7 +234,7 @@ export default class System
                 let defaultSubpanel = panel.subpanels.values().next().value;
 
                 this.clear();
-                this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`);
+                this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`, {}, false);
                 // window.location = `${this._uris.base}${panel.alias}/${defaultSubpanel.alias}`;
             });
 
@@ -290,7 +290,7 @@ export default class System
     _setPanelModule(module)
     {
         if (!this._user.loggedIn) {
-            this.pager.setPage('lb.logIn');
+            this.pager.setPage('lb.logIn', {}, false);
             window.location = this._uris.base + this._aliases.logIn;
             return;
         }
