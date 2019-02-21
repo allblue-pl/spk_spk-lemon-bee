@@ -98,6 +98,7 @@ export default class System
                 return this.text(text);
             },
             uris: this._uris,
+            user: this._user,
         };
     }
 
