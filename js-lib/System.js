@@ -145,6 +145,12 @@ export default class System
     
                 name: 'string',
                 shortcut: [ 'boolean', js0.Default(true), ],
+                
+                menu: js0.Preset({
+                    shortcut: [ 'boolean', js0.Default(true), ],
+                    uri: [ 'boolean', js0.Null, js0.Default(null), ],
+                }),
+
                 alias: 'string',
                 title: 'string',
                 faIcon: [ 'string', js0.Default(null), ],
@@ -152,8 +158,9 @@ export default class System
                 
                 subpanels: js0.Iterable(js0.Preset({
                     name: 'string',
-                    module: 'function',
-    
+                    module: [ 'function', js0.Null ],
+                    uri: [ 'string', js0.Null, js0.Default(null), ],
+
                     permissions: [ js0.Default([]), Array ],
     
                     alias: 'string',
@@ -240,6 +247,9 @@ export default class System
             });
 
             for (let [ subpanelName, subpanel ] of panel.subpanels) {
+                if (subpanel.module === null)
+                    continue;
+
                 this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
                         `${panel.alias}/${subpanel.alias}`, () => {
                     this.clear();
@@ -271,9 +281,10 @@ export default class System
                     for (let sKey in subpanel)
                         pSubpanel[sKey] = subpanel[sKey];
 
-                    if (panel.shortcut && subpanel.shortcut)
-                        pSubpanel.uri = this.pager.parseUri(`${panel.alias}/${subpanel.alias}`);
-                    else
+                    if (panel.shortcut && subpanel.shortcut) {
+                        if (pSubpanel.uri === null)
+                            pSubpanel.uri = this.pager.parseUri(`${panel.alias}/${subpanel.alias}`);
+                    } else
                         pSubpanel.uri = null;
 
                     pPanel.subpanels.set(subpanel.name, pSubpanel);
