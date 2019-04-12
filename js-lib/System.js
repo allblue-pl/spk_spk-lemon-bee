@@ -174,7 +174,7 @@ export default class System
             texts: 'object',
             uris: js0.Preset({
                 base: [ 'string', js0.Default('/') ],
-                package: [ 'string', js0.Default('/dev/node_modules/spk-lemon-bee/') ],
+                package: [ 'string', js0.Default(null) ],
                 api: [ 'string' ],
             }),
             user: js0.Preset({
@@ -188,6 +188,7 @@ export default class System
         this._images = presets.images;
         this._texts = presets.texts;
         this._uris = presets.uris;
+
         this._user = presets.user;
 
         if (this._images.logo === null)
@@ -200,6 +201,9 @@ export default class System
                 this._images.messages[messageType] = `${this._uris.package}images/messages/${messageType}.${ext}`;
             }
         }
+
+        if (this._uris.package === null)
+            this._uris.package = this._uris.base + 'dev/node_modules/spk-lemon-bee/';
 
         for (let panel of presets.panels)
             this._addPanel(panel);
@@ -242,7 +246,7 @@ export default class System
                 let defaultSubpanel = panel.subpanels.values().next().value;
 
                 this.clear();
-                this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`, {}, false);
+                this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`, {}, {}, false);
                 // window.location = `${this._uris.base}${panel.alias}/${defaultSubpanel.alias}`;
             });
 
@@ -302,7 +306,7 @@ export default class System
     _setPanelModule(module)
     {
         if (!this._user.loggedIn) {
-            this.pager.setPage('lb.logIn', {}, false);
+            this.pager.setPage('lb.logIn', {}, {}, false);
             window.location = this._uris.base + this._aliases.logIn;
             return;
         }
