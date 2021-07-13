@@ -1,8 +1,9 @@
 /* User Info */
 .lb-user-info {
-	height: $lb-topbar-height;
+    height: $lb-top-bar-height;
+    padding-right: 15px;
 	text-align: right;
-	line-height: $lb-topbar-height;
+	line-height: $lb-top-bar-height;
 	color: $lb-blue-light;
 
 	a {
@@ -15,7 +16,7 @@
 
 	img {
 		display: inline;
-		max-height: $lb-topbar-height - 20px;
+		max-height: $lb-top-bar-height - 20px;
 	}
 
 	@include media-breakpoint-down(sm) {

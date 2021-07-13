@@ -17,25 +17,43 @@ export default class Body extends spocky.Module
 
         this.system = system;
 
+        this._listeners_OnBack = null;
+
         let l = system.createLayout($layouts.Body);
-        let lMenu = this._getMenuLayout();
-        let lUserInfo = this._getUserInfoLayout();
+        this.lMenu = this._getMenuLayout();
+        this.lUserInfo = this._getUserInfoLayout();
 
         l.$elems.backToTop.addEventListener('click', (evt) => {
             evt.preventDefault();
             $("html, body").animate({ scrollTop: 0 }, "fast");
         });
 
-        lUserInfo.$elems.logOut.addEventListener('click', (evt) => {
+        this.lUserInfo.$elems.logOut.addEventListener('click', (evt) => {
             evt.preventDefault();
             system.msgs.showLoading();
-            webABApi.json(system.uris.api + 'log-out', {}, (result) => {
-                window.location = system.uris.base;
-            });
+            system.actions.logOut_Async()
+                .then((result) => {
+                    if (!result.success)
+                        system.msgs.showMessage_Failure(result.error);
+                    else {
+                        system.setUser({
+                            loggedIn: false,
+                            login: '',
+                            permissions: [],
+                        });
+                    }
+
+                    system.msgs.hideLoading();
+
+                    system.pager.setPage('lb.logIn');
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
         });
 
-        l.$holders.topMenu.$view = lMenu;
-        l.$holders.userInfo.$view = lUserInfo;
+        l.$holders.topMenu.$view = this.lMenu;
+        l.$holders.userInfo.$view = this.lUserInfo;
 
         this.layout = l;
 
@@ -49,22 +67,58 @@ export default class Body extends spocky.Module
         this.layout.$holders.content.$view = content;
     }
 
+    setListener_OnBack(listener)
+    {
+        js0.args(arguments, 'function');
+
+        this._listeners_OnBack = listener;
+    }
+
 
     _getMenuLayout()
     {
         let l = this.system.createLayout($layouts.TopMenu);
 
-        let items = [];
+        l.$fields.hasBackButton = false;
+
         let panels = this.system.getPanels();
-        for (let panel of panels) {
+
+        l.$elems.menuItem_Home.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            this.system.pager.setPage('lb.main');
+        });
+        l.$elems.menuItems_Panel((elem, keys) => {
+            elem.addEventListener('click', (evt) => {
+                evt.preventDefault();
+
+                let panel = panels[keys[0]];
+                if (panel.menu.action !== null) {
+                    $(l.$elems.Menu).collapse('hide');
+                    panel.menu.action();
+                } else
+                    this.system.pager.setUri(l.$fields.menuItems(keys[0]).uri);
+            });
+        });
+        l.$elems.BackButton.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            if (this._listeners_OnBack === null)
+                return;
+
+            this._listeners_OnBack();
+        });
+
+        let items = new Map();
+        for (let i = 0; i < panels.length; i++) {
+            let panel = panels[i];
             if (!panel.menu.shortcut)
                 continue;
 
-            items.push({
+            items.set(i, {
                 uri: panel.menu.uri === null ?
                         `${this.system.uris.base}${panel.alias}/` :
                         panel.menu.uri,
                 title: panel.title,
+                faIcon: panel.faIcon,
             });
         }
         l.$fields.menuItems = items;

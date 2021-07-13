@@ -1,6 +1,6 @@
 /* Tables */
 table {
-	@extend .table-hover;
+    @extend .table-hover;
 	a {
 		color: $gray-600;
 	}
@@ -8,7 +8,7 @@ table {
 		color: #000;
 	}
 	thead {
-		background-color: $primary;
+		background-color: $theme-primary;
 		color: #fff;
 
 		a {
@@ -26,10 +26,37 @@ table {
 				text-align: center;
 			}
 		}
-	}
+    }
+    .not-downloaded {
+        // background-color: rgba(240, 240 ,240, 1);
+        a {
+            color: $primary;
+        }
+    }
 }
 
-/* calnedar */
+.table {
+    @extend .table-sm;
+}
+
+.table_empty {
+    padding: 15px;
+}
+
+/* Row styles */
+.data-offline {
+    background-color: #ececec !important;
+    td {
+        border-top-color: rgb(255, 255, 255) !important;
+    }
+}
+.data-synched {
+    td a {
+        color: $theme-primary !important;
+    }
+}
+
+/* Calnedar */
 .input-group {
 	table {
 		text-shadow: none!important;
@@ -50,3 +77,17 @@ table {
 		}
 	}
 }
+
+@include media-breakpoint-down(sm) {
+    table {
+        font-size: $lb-text-small;
+        thead {
+            font-size: $lb-text-small;
+        }
+        td {
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+        }
+    }
+}
+

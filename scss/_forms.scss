@@ -1,0 +1,43 @@
+
+.form-group {
+    .textField {
+        padding-left: 15px;
+    }
+}
+
+/* forms */
+/* form field with additional information below inputbox */
+
+.lb-form-filed-message {
+	.form-group {
+		margin-bottom: 5px;
+		p.error {
+			margin-bottom: 0px;
+		}
+	}
+}
+.lb-form-infotext {
+	padding-left: 5px;
+	color: $lb-blue;
+}
+
+/* labels */
+label {
+	font-weight: 400;
+}
+
+.form-horizontal .control-label {
+	text-align: left; /* force form labels to float left */
+}
+
+/* MEDIA */
+@include media-breakpoint-down(lg) {
+	.lb-form-infotext {
+		padding-left: 10px;
+	}
+}
+@include media-breakpoint-down(sm) {
+    .lb-form-infotext {
+        padding-left: 0px;
+    }
+}

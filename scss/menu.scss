@@ -1,72 +1,85 @@
 
-/* Top menu */
-.lb-menu-top {
+/* Side menu */
+.lb-menu-main {
 	img {
 		display: inline;
 		max-width: 50px !important;
 		margin-right: 5px;
-	}
+    }
+    .navbar {
+        padding: 0px;
+        .navbar-toggler {
+            border-color: #fff;
+            border-radius: 0px;
+        }
+    }
 	.navbar-nav {
 		display: inline-block;
 		width: 100%;
 	}
 	li {
-		border-bottom: 1px solid $gray-400;
-	}
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid darken($gray-100, 5);
+        @include media-breakpoint-down(sm) {
+            padding: 0.5rem;
+            a {
+                font-size: $lb-text-small;
+            }
+        }       
+    }
+    li:hover, .active {
+        background-color: $theme-secondary;
+        a {
+            color: #fff !important;
+        }
+    }
+
 }
 
-/* Main menu */
-.lb-menu-main {
-	.main-tile {
-		margin: 0px;
-		padding: 40px 10px;
-		font-size: 24px;
-		img {
-			margin: auto;
-			max-width: 100px;
-		}
-	}
-	.sub-tile-holder {
-		margin: 0 -5px;
-	}
-	.sub-tile {
-		padding: 10px 5px;
-		float: left;
-		.btn {
-			margin: 0px;
-		}
-	}
+/* Tiles */
+.lb-menu-tiles {
+    .card {
+        margin-bottom: 15px;
+        border: none;
+        .tile-main {
+            margin: 0px;
+            padding: 30px 10px;
+            font-size: $lb-text-bigger;
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+            img {
+                display: block;
+                margin: auto;
+                margin-bottom: 10px;
+                max-width: 100px;
+            }
+        }
+    }
+    .card-body {
+        padding: 1rem 0.5rem;
+        .btn-holder {
+            padding: 0rem 0.5rem;
+        }
+    }
 }
 
 /* Media */
-
-@media (max-width: 1300px) {
-	.lb-menu-top {
-		a {
-			font-size: 16px;
-		}
-		img {
-			max-width: 40px !important;
-		}
-	}
-}
-
-@include media-breakpoint-down(lg) {
-	.lb-menu-top {
-		a {
-			font-size: 18px;
-		}
-	}
-}
-
-
-@include media-breakpoint-down(md) {
-	.lb-menu-top {
-		padding-top: 0px;
-		padding-bottom: 0px;
-	}
-}
-
 @include media-breakpoint-down(sm) {
-
+    .lb-menu-tiles {
+        .card {
+            .tile-main {
+                padding: 20px 10px;
+                img {
+                    height: 40px;
+                    margin-bottom: 4px;
+                }
+            }
+        }
+        .card-body {
+            padding: 0.5rem 0.25rem;
+            .btn-holder {
+                padding: 0rem 0.25rem;
+            }
+        }
+    }
 }

@@ -70,19 +70,24 @@ export default class Account extends spocky.Module
             return;
 
         this.system.msgs.showLoading();
-        webABApi.json(this.system.uris.api + 'change-password', 
-                this.f.getValues(), (result) => {
-            if (result.isSuccess()) {
-                this.message_SetSuccess(result.data.message);
-                this.f.setValues({
-                    Password: '',
-                    NewPassword: '',
-                    NewPassword_Confirmation: '',
-                });
-            } else
-                this.message_SetError(result.data.message);
-            this.system.msgs.hideLoading();
-        });
+        let fValues = this.f.getValues();
+        this.system.actions.changePassword_Async(fValues.Password, fValues.NewPassword)
+            .then((result) => {
+                if (result.success) {
+                    this.message_SetSuccess(result.message);
+                    this.f.setValues({
+                        Password: '',
+                        NewPassword: '',
+                        NewPassword_Confirmation: '',
+                    });
+                } else
+                    this.message_SetError(result.message);
+
+                this.system.msgs.hideLoading();
+            })
+            .catch((e) => {
+                console.error(e);
+            });
     }
 
     message_Clear()

@@ -13,6 +13,10 @@ const
 export default class System
 {
 
+    get actions() {
+        return this._actions;
+    }
+
     get module() {
         if (!this._initialized)
             throw new Error('LemonBee system not initialized.');
@@ -25,6 +29,41 @@ export default class System
             throw new Error('LemonBee system not initialized.');
 
         return this._panels;
+    }
+
+    get panels_Preset() {
+        return js0.Iterable(js0.Preset({
+            permissions: [ js0.Default([]), Array ],
+
+            name: 'string',
+            shortcut: [ 'boolean', js0.Default(true), ],
+            
+            menu: js0.Preset({
+                shortcut: [ 'boolean', js0.Default(true), ],
+                uri: [ 'boolean', js0.Null, js0.Default(null), ],
+                action: [ 'function', js0.Null, js0.Default(null), ],
+            }),
+
+            alias: 'string',
+            title: 'string',
+            faIcon: [ 'string', js0.Default(null), ],
+            image: [ 'string', js0.Default(null), ],
+            
+            subpanels: js0.Iterable(js0.Preset({
+                name: 'string',
+                module: [ 'function', js0.Null ],
+                uri: [ 'string', js0.Null, js0.Default(null), ],
+
+                permissions: [ js0.Default([]), Array ],
+
+                alias: 'string',
+                title: 'string',
+                faIcon: [ js0.Default(null), 'string' ],
+                image: [ js0.Default(null), 'string' ],    
+
+                shortcut: [ js0.Default(true), 'boolean' ],
+            })),
+        }))
     }
 
     get uris() {
@@ -54,9 +93,9 @@ export default class System
             logIn: 'log-in',
         };
         this._images = {};
-        this._texts = {};
+        this._textFn = null;
         this._uris = {
-            base: '/',
+            base: pager.base,
         };
         this._user = {
             loggedIn: false,
@@ -75,6 +114,10 @@ export default class System
         
         this.pager = pager;
         this.msgs = null;
+
+        this._mBody = null;
+
+        this._listeners_OnPage = null;
     }
 
     clear()
@@ -123,9 +166,59 @@ export default class System
         return allowedPanels;
     }
 
+    setBackButton(hasBackButton)
+    {
+        js0.args(arguments, 'boolean');
+
+        if (this._mBody === null)
+            throw new Error('No active panel.');
+
+        this._mBody.lMenu.$fields.hasBackButton = hasBackButton;
+    }
+
+    setListener_OnBack(listener)
+    {
+        js0.args(arguments, 'function');
+
+        this._mBody.setListener_OnBack(listener);
+    }
+
+    setListener_OnPage(listener)
+    {
+        js0.args(arguments, 'function');
+
+        this._listeners_OnPage = listener;
+    }
+
+    setPanels(panels)
+    {
+        js0.args(arguments, this.panels_Preset);
+
+        this._panels.clear();
+
+        for (let panel of panels)
+            this._addPanel(panel);
+    }
+
+    setUser(user)
+    {
+        js0.args(arguments, js0.Preset({
+            loggedIn: 'boolean',                
+            login: 'string',
+            permissions: Array,
+        }));
+
+        this._user = user;
+    }
+
     setup(presets)
     {
         js0.args(arguments, js0.Preset({
+            actions: js0.Preset({
+                changePassword_Async: 'function',
+                logIn_Async: 'function',
+                logOut_Async: 'function',
+            }),
             aliases: js0.Preset({
                 account: 'string',
                 main: 'string',
@@ -140,56 +233,20 @@ export default class System
                     failure: [ 'string', js0.Default(null), ],
                 }),
             }),
-            panels: js0.Iterable(js0.Preset({
-                permissions: [ js0.Default([]), Array ],
-    
-                name: 'string',
-                shortcut: [ 'boolean', js0.Default(true), ],
-                
-                menu: js0.Preset({
-                    shortcut: [ 'boolean', js0.Default(true), ],
-                    uri: [ 'boolean', js0.Null, js0.Default(null), ],
-                }),
-
-                alias: 'string',
-                title: 'string',
-                faIcon: [ 'string', js0.Default(null), ],
-                image: [ 'string', js0.Default(null), ],
-                
-                subpanels: js0.Iterable(js0.Preset({
-                    name: 'string',
-                    module: [ 'function', js0.Null ],
-                    uri: [ 'string', js0.Null, js0.Default(null), ],
-
-                    permissions: [ js0.Default([]), Array ],
-    
-                    alias: 'string',
-                    title: 'string',
-                    faIcon: [ js0.Default(null), 'string' ],
-                    image: [ js0.Default(null), 'string' ],    
-
-                    shortcut: [ js0.Default(true), 'boolean' ],
-                })),
-            })),
-            texts: 'object',
+            panels: this.panels_Preset,
+            textFn: 'function',
             uris: js0.Preset({
-                base: [ 'string', js0.Default('/') ],
+                base: [ 'string', js0.Default('') ],
                 package: [ 'string', js0.Default(null) ],
-                api: [ 'string' ],
-            }),
-            user: js0.Preset({
-                loggedIn: 'boolean',                
-                login: 'string',
-                permissions: Array,
+                // api: [ 'string' ],
             }),
         }));
 
+        this._actions = presets.actions;
         this._aliases = presets.aliases;
         this._images = presets.images;
-        this._texts = presets.texts;
+        this._textFn = presets.textFn;
         this._uris = presets.uris;
-
-        this._user = presets.user;
 
         if (this._images.logo === null)
             this._images.logo = `${this._uris.package}images/logo.png`;
@@ -202,26 +259,33 @@ export default class System
             }
         }
 
+        this._uris.base = this.pager.base + this._uris.base;
         if (this._uris.package === null)
             this._uris.package = this._uris.base + 'dev/node_modules/spk-lemon-bee/';
 
-        for (let panel of presets.panels)
-            this._addPanel(panel);
+        this.setPanels(presets.panels);
+        this.setup_Pager();
 
         this.msgs = new spkMessages.Messages(this._images.messages);
         
         this._module_Layout.$holders.msgs.$view = this.msgs;
     }
 
-    init()
+    setup_Pager()
     {
         this.pager.page('lb.main', this._aliases.main, () => {
+            if (this._listeners_OnPage !== null)
+                this._listeners_OnPage();
+
             this.clear();
-            this._setPanelModule(new modules.Main(this, this._panels));
+            this._setPanelModule(modules.Main);
         });
         this._uris.main = this.pager.getPageUri('lb.main');
 
         this.pager.page('lb.logIn', this._aliases.logIn, () => {
+            if (this._listeners_OnPage !== null)
+                this._listeners_OnPage();
+
             if (this._user.loggedIn) {               
                 this.clear();
                 this.pager.setPage('lb.main');
@@ -232,14 +296,19 @@ export default class System
         });
         
         this.pager.page('lb.account', this._aliases.account, () => {
+            if (this._listeners_OnPage !== null)
+                this._listeners_OnPage();
+
             this.clear();
-            this._setPanelModule(new modules.Account(this, this._panels));
+            this._setPanelModule(modules.Account);
         });
         this._uris.account = this.pager.getPageUri('lb.account');
 
-
         for (let [ panelName, panel ] of this._panels) {
             this.pager.page(`lb.panels.${panel.name}`, panel.alias, () => {
+                if (this._listeners_OnPage !== null)
+                    this._listeners_OnPage();
+
                 if (panel.subpanels.size === 0)
                     throw new Error(`No subpanels in panel '${panelName}'.`);
 
@@ -256,21 +325,24 @@ export default class System
 
                 this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
                         `${panel.alias}/${subpanel.alias}`, () => {
+                    if (this._listeners_OnPage !== null)
+                        this._listeners_OnPage();
+
                     this.clear();
-                    this._setPanelModule(new subpanel.module(this));
+                    this._setPanelModule(subpanel.module);
                 });
             }
         }
+    }
 
+    init()
+    {
         this._initialized = true;
     }
 
     text(text)
     {
-        if (text in this._texts)
-            return this._texts[text];
-
-        return `#${text}#`;
+        return this._textFn(text);
     }
 
 
@@ -303,18 +375,19 @@ export default class System
         this._panels.set(panel.name, pPanel);
     }
 
-    _setPanelModule(module)
+    _setPanelModule(moduleClass)
     {
         if (!this._user.loggedIn) {
             this.pager.setPage('lb.logIn', {}, {}, false);
-            window.location = this._uris.base + this._aliases.logIn;
+            // window.location = this._uris.base + this._aliases.logIn;
             return;
         }
 
-        let body = new modules.Body(this);
-        body.setContent(module);
+        this._mBody = new modules.Body(this);
+        let module = new moduleClass(this, this._panels);
+        this._mBody.setContent(module);
 
-        this._module_Layout.$holders.content.$view = body;
+        this._module_Layout.$holders.content.$view = this._mBody;
     }
 
 }

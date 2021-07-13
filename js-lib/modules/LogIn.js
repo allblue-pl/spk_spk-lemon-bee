@@ -20,6 +20,9 @@ export default class LogIn extends spocky.Module
         this.l = system.createLayout($layouts.LogIn);
         this.lForm = system.createLayout($layouts.LogIn_Form);
 
+        this.lForm.$fields.login = '';
+        this.lForm.$fields.password = '';
+
         this.lForm.$elems.form.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this.logIn();
@@ -48,26 +51,48 @@ export default class LogIn extends spocky.Module
     {
         this.lb.msgs.showLoading();
 
-        abApi.json(`${this.lb.uris.api}log-in`, {
-            Login: this.lForm.$elems.login.value,
-            Password: this.lForm.$elems.password.value,
-                }, (result) => {
-            if (result.isSuccess())
-                window.location = this.lb.uris.base;
-            else if (result.isFailure()) {
-                this.lForm.$fields.error = {
-                    show: true,
-                    message: this.lb.text('errors_LogInFailed'),
-                };
+        this.lb.actions.logIn_Async(this.lForm.$elems.login.value,
+                this.lForm.$elems.password.value)
+            .then((result) => {
+                if (result.user.loggedIn) {
+                    this.lForm.$fields.error = {
+                        show: false,
+                        message: '',
+                    };
+
+                    this.lb.setUser(result.user);
+                    this.lb.pager.setPage('lb.main');
+                } else {
+                    this.lForm.$fields.error = {
+                        show: true,
+                        message: result.error,
+                    };
+                }
+
                 this.lb.msgs.hideLoading();
-            } else {
-                this.lForm.$fields.error = {
-                    show: true,
-                    message: this.lb.text('errors_LogInError'),
-                };
-                this.lb.msgs.hideLoading();
-            }
-        });
+            });
+
+
+        // abApi.json(`${this.lb.uris.api}log-in`, {
+        //     Login: this.lForm.$elems.login.value,
+        //     Password: this.lForm.$elems.password.value,
+        //         }, (result) => {
+        //     if (result.isSuccess())
+        //         window.location = this.lb.uris.base;
+        //     else if (result.isFailure()) {
+        //         this.lForm.$fields.error = {
+        //             show: true,
+        //             message: this.lb.text('errors_LogInFailed'),
+        //         };
+        //         this.lb.msgs.hideLoading();
+        //     } else {
+        //         this.lForm.$fields.error = {
+        //             show: true,
+        //             message: this.lb.text('errors_LogInError'),
+        //         };
+        //         this.lb.msgs.hideLoading();
+        //     }
+        // });
     }
 
 }
