@@ -33,15 +33,20 @@ export default class Body extends spocky.Module
             system.msgs.showLoading();
             system.actions.logOut_Async()
                 .then((result) => {
-                    if (!result.success)
+                    console.log(result);
+
+                    if (!result.success) {
                         system.msgs.showMessage_Failure(result.error);
-                    else {
-                        system.setUser({
-                            loggedIn: false,
-                            login: '',
-                            permissions: [],
-                        });
+                        system.msgs.hideLoading();
+
+                        return;
                     }
+
+                    system.setUser({
+                        loggedIn: false,
+                        login: '',
+                        permissions: [],
+                    });
 
                     system.msgs.hideLoading();
 
