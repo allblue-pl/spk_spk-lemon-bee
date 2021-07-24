@@ -10,7 +10,6 @@ table {
 	thead {
 		background-color: $theme-primary;
 		color: #fff;
-
 		a {
 			color: #fff;
 			font-weight: normal!important;
@@ -27,33 +26,10 @@ table {
 			}
 		}
     }
-    .not-downloaded {
-        // background-color: rgba(240, 240 ,240, 1);
-        a {
-            color: $primary;
-        }
-    }
-}
-
-.table {
-    @extend .table-sm;
 }
 
 .table_empty {
     padding: 15px;
-}
-
-/* Row styles */
-.data-offline {
-    background-color: #ececec !important;
-    td {
-        border-top-color: rgb(255, 255, 255) !important;
-    }
-}
-.data-synched {
-    td a {
-        color: $theme-primary !important;
-    }
 }
 
 /* Calnedar */

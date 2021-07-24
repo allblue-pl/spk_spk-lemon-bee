@@ -1,0 +1,92 @@
+
+
+// spk-file-upload
+$tile-width: 240px;
+$tile-height: 180px;
+$tile-padding: 10px;
+
+.spk-e-images {
+	.files-loader {
+		position: absolute;
+		top: 60px;
+		left: 15px;
+	}
+
+    .files-holder {
+        width: 100%;
+        min-height: $tile-height;
+		border: 3px solid #fff;
+
+		.file-holder {
+			padding: 0px 16px;
+			.alert {
+				margin-bottom: 5px;
+				padding: 5px 0px;
+				a {
+					color: #3c763d;
+				}
+			}
+			.alert:hover {
+				background-color: darken(#dff0d8, 10%);
+			}
+
+			.file-manager {
+				text-align: right;
+				margin-top: 5px;
+				padding-top: 5px;
+				border-top: 1px solid #fff;
+				a {
+					padding: 0px 5px;
+				}
+				a:hover {
+					text-decoration: underline;
+				}
+				a:first-of-type {
+					padding-left: 0px;
+				}
+			}
+		}
+
+		i {
+			padding-right: 5px;
+		}
+
+        .image-holder {
+			width: $tile-width;
+			height: $tile-height;
+			float: left;
+			padding: $tile-padding;
+
+			a.image-option {
+				display: inline-block;
+				width: round(($tile-width - 2 * $tile-padding) / 3);
+				overflow: hidden;
+			}
+
+			 .image-displayer {
+				 background-position: center;
+				 background-size: cover;
+				 img {
+					 border: 1px solid $gray-300;
+					 width: $tile-width;
+					 height: $tile-height - 50px;
+				 }
+			 }
+		}
+		@include media-breakpoint-down(lg) {
+
+		}
+    }
+
+	.single-image {
+		width: 230px;
+		.image-holder {
+			width: 200px;
+		}
+	}
+
+    .dragover {
+        background-color: #b4fbbb;
+        border: 3px dashed #5cb85c;
+    }
+}

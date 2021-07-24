@@ -1,70 +1,5 @@
 
 <!-- Main menu panel -->
-<div class="lb-main-header-bg d-none"></div>
-<div class="lb-main-header d-none">
-    <h1>Dzień dobry.</h1>
-    <p>Piątek, 15 marca 2020</p>
-</div>
-<div class="lb-main-stats d-none">
-    <div class="row">
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-auto">
-
-                        </div>
-                        <div class="col">
-                            <p class="stat-desc">
-                                $eText('Sys:texts_Users')
-                            </p>
-                            <p class="stat-info">248</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-auto">A</div>
-                        <div class="col">
-                            <p class="stat-desc">Farmers</p>
-                            <p class="stat-info">548</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-auto">A</div>
-                        <div class="col">
-                            <p class="stat-desc">Bulls</p>
-                            <p class="stat-info">187 / 102</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-auto">A</div>
-                        <div class="col">
-                            <p class="stat-desc">Receipts</p>
-                            <p class="stat-info">10 586</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="lb-menu-tiles row">
     <div _repeat="panels:panel" _show="panel.shortcut" class="col-lg-4 col-sm-6 $class">
         <div class="card shadow-sm">
@@ -73,9 +8,9 @@
                 $panel.title
             </a>
             <div class="card-body">
-                <div class="row no-gutters">
-                    <div _repeat="panel.subpanels:subpanel" _show="subpanel.shortcut" class="col-6 btn-holder">
-                        <a _elem="Buttons_Subpanel" href="$subpanel.uri" class="btn btn-theme-light mg-full">
+                <div class="row">
+                    <div _repeat="panel.subpanels:subpanel" _show="subpanel.shortcut" class="col">
+                        <a _elem="Buttons_Subpanel" href="$subpanel.uri" class="btn btn-theme-light w-100">
                             <i class="fa $subpanel.faIcon pr-2"> </i>$subpanel.title
                         </a>
                     </div>
@@ -84,4 +19,3 @@
         </div>
     </div>
 </div>
-<div class="mg-clear"></div>

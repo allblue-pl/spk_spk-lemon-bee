@@ -1,20 +1,15 @@
 
 .lb-buttons-panel {
     text-align: right;
-    .btn-group {
-        a {
-            @extend .col;
-        }
-    }
-    @include media-breakpoint-down(lg) {
-        margin-top: 15px;
+    .btn {
+        min-width: 180px;
     }
 }
 
  .lb-logo {
-    margin-bottom: 20px;
-    padding: 30px 20px;
+    padding: 1rem;
     img {
+        width: $lb-logo-width;
         max-width: 100%;
     }
 }
@@ -25,84 +20,51 @@
     z-index: 11;
 }
 
-.lb-main-holder {
-    position: relative;
-    padding-top: $lb-top-bar-height + 15px;
-    padding-bottom: 15px;
-    min-height: 100vh;
-    background-color: $gray-100;
-    .card {
-        .card-header {
-            position: relative;
-            background-color: $theme-primary;
-            color: #fff;
-        }
-        .filter-holder {
-            border-top-right-radius: 0.25rem;
-            border-top-left-radius: 0.25rem;
-            .btn-group {
-                margin-top: 28px;
-                margin-bottom: 1rem;
+.lb-content-holder {
+    min-height: 100%;
+    background-color: $gray-200;
+    .lb-main-holder {
+        padding-top: $lb-top-bar-height + 15px;
+        .card {
+            .card-header {
+                position: relative;
+                background-color: $theme-primary;
+                color: #fff;
             }
-            .form-group {
-                margin-bottom: -1rem !important;
+            .filter-holder {
+                border-top-right-radius: 0.25rem;
+                border-top-left-radius: 0.25rem;
+                .btn-group {
+                    margin-top: 28px;
+                    margin-bottom: 1rem;
+                }
+                .form-group {
+                    margin-bottom: -1rem !important;
+                }
+                label {
+                    margin: .2rem 0;
+                    font-size: $lb-text-smaller;
+                }
+            }
+        }
+        .card-form {
+            margin-top: 20px;
+            padding: 0px 0px 15px 0px;
+            .form-horizontal {
+                padding-top: 15px;
+            }
+            .form-horizontal-with-header {
+                padding-top: 0px;
             }
             label {
-                margin: .2rem 0;
-                font-size: $lb-text-smaller;
+                font-weight: bold;
+            }
+            .alert {
+                border-radius: 0;
             }
         }
-    }
-    .card-form {
-        margin-top: 20px;
-        padding: 0px 0px 15px 0px;
-        .form-horizontal {
-            padding-top: 15px;
-        }
-        .form-horizontal-with-header {
-            padding-top: 0px;
-        }
-        label {
-            font-weight: bold;
-        }
-        .alert {
-            border-radius: 0;
-        }
-    }
-    .lb-main-header {
-        position: relative;
-        padding: 15px 0px;
-        h1 {
-            margin: 0px;
-            line-height: 1;
-        }
-    }
-    .lb-main-header-bg {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: $lb-top-bar-height * 3.5;
-        background-color: $gray-200;
-    }
-    .lb-main-hints {
-        margin: 0.5rem 0;
-    }
-    .lb-main-stats {
-        padding-bottom: 30px;
-        img {
-            max-width: 40px;
-            padding-top: 10px;
-        }
-        p {
-            margin: 0px;
-        }
-        .stat-desc {
-            font-size: $lb-text-small;
-            color: $gray-500;
-        }
-        .stat-info {
-            font-size: $lb-text-biggest;
+        .lb-main-hints {
+            margin: 0.5rem 0;
         }
     }
 }

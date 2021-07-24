@@ -44,21 +44,12 @@
         .tile-main {
             margin: 0px;
             padding: 30px 10px;
-            font-size: $lb-text-bigger;
             border-bottom-right-radius: 0px;
             border-bottom-left-radius: 0px;
             img {
-                display: block;
-                margin: auto;
-                margin-bottom: 10px;
                 max-width: 100px;
+                margin-right: 1rem;
             }
-        }
-    }
-    .card-body {
-        padding: 1rem 0.5rem;
-        .btn-holder {
-            padding: 0rem 0.5rem;
         }
     }
 }

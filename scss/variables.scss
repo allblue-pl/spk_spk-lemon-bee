@@ -1,6 +1,6 @@
 
-$theme-primary: #064694;
-$theme-secondary: #00a0e3;
+$theme-primary: #00a0e3;
+$theme-secondary: #6196c5;
 
 /* Bootstrap Variables Overwrites */
 $primary: $theme-primary;
@@ -17,7 +17,7 @@ $theme-colors: (
   dark: $gray-800
 );
 /* LemonBee Variables */
-$lb-logo-width: 200px;
+$lb-logo-width: 180px;
 $lb-logo-height: 47px;
 
 $lb-text-big: $font-size-base * 1.2;
@@ -28,7 +28,7 @@ $lb-text-small: $font-size-base * 0.85;
 $lb-text-smaller: $font-size-base * 0.7;
 $lb-text-smallest: $font-size-base * 0.6;
 
-$lb-top-bar-height: 60px;
+$lb-top-bar-height: 64px;
 $lb-top-bar-height-sm: 50px;
 $lb-buttons-panel-height: 60px;
 
@@ -43,6 +43,21 @@ $lb-gray: #a9a9a9;
 $lb-gray-dark: #3b3b3b;
 $lb-gray-blue-dark: #2f353f;
 $lb-red: #ed1c24;
+
+// Overrides
+$primary: $theme-primary;
+$link-color: $primary;
+$link-hover-color: darken($primary, 10);
+$theme-colors: (
+  primary: $primary,
+  secondary: $gray-600,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $gray-100,
+  dark: $gray-800
+);
 
 /* </Custom Variables Definitions> */
 

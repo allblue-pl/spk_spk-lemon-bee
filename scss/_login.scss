@@ -16,42 +16,27 @@
 .lb-login {
     align-self: center;
 	.lb-login-content {
-		min-height: 350px;
         background-color: $gray-200;
-        border-bottom: 15px solid $theme-primary;
+        border-bottom: 1rem solid $theme-secondary;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
 		.alert {
-			margin-bottom: 15px;
+			margin-bottom: 1rem;
 			padding: 8px;
 		}
 	}
-
 	.lb-login-logo {
+        padding: 1rem 0;
+        text-align: center;
         background-color: #fff;
-		img {
-			position: absolute;
-   			left: 50%;
-   			top: 50%;
-   			transform: translate(-50%, -50%);
-			max-width: 85%;
-		}
 	}
 	.lb-login-form {
-		height: 100%;
-        padding: 15px;
-        padding-top: 30px;
-        h3 {
-            text-align: center;
-        }
+        padding: 2rem 1rem;
         .login-info {
-            float: none;
-            width: 100%;
-            margin-top: 30px;
             .form-control {
-                margin-bottom: 15px;
+                margin-bottom: 1rem;
             }
             .btn {
                 @extend .btn-lg;
-                margin: 15px 0px;
             }
         }
 	}
@@ -72,7 +57,7 @@
 @include media-breakpoint-down(sm) {
 	.lb-login {
 		align-self: top;
-		margin: 15px;
+		margin: 1rem;
 		.lb-login-content {
 			height: auto;
         }

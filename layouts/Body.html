@@ -1,23 +1,20 @@
 
-<div class="container-fluid $panelClass ">
-    <div class="lb-top-bar shadow-sm">
-        <div class="row">
-            <div class="offset-md-3 offset-lg-2 col"></div>
-            <div class="col">
-                <$ _holder="userInfo" />
-            </div>
-        </div>
-    </div>
+<div class="container-fluid min-vh-100 $panelClass ">
     <div class="row">
-        <div class="col-md-3 col-lg-2 lb-panel-fixed lb-menu-holder shadow-sm">
+        <div class="col-md-3 col-lg-2 min-vh-100 lb-menu-holder">
             <$ _holder="topMenu" />
         </div>
-        <div class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 lb-main-holder">
-            <$ _holder="content" />
-            <div class="back-to-top">
-                <a _elem="backToTop" class="spScrollToTop btn btn-theme-light" href="">
-                    <i class="fa fa-chevron-up"></i>
-                </a>
+        <div class="col-md-9 col-lg-10 min-vh-100 lb-content-holder">
+            <div class="lb-top-bar">
+                <$ _holder="userInfo" />
+            </div>
+            <div class="lb-main-holder">
+                <$ _holder="content" />
+                <div class="back-to-top">
+                    <a _elem="backToTop" class="spScrollToTop btn btn-theme-light" href="">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
