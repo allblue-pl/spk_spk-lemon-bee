@@ -1,9 +1,6 @@
 
 .lb-buttons-panel {
-    text-align: right;
-    .btn {
-        min-width: 180px;
-    }
+    font-size: $lb-text-smaller !important;
 }
 
  .lb-logo {
@@ -117,72 +114,23 @@
 }
 
 /* MEDIA */
+@include media-breakpoint-down(lg) {
+    .lb-buttons-panel {
+        margin-bottom: 1rem;
+    }
+}
 @include media-breakpoint-down(md) {
-    .lb-main-holder {
-        .card {
-            .filter-holder {
-                .btn-group {
-                    margin-top: 1rem;
-                }
-            }
-        }
+    .lb-content-holder .lb-main-holder {
+        padding-top: 1rem;
+    }
+    .lb-menu-holder {
+        min-height: auto !important;
+    }
+    .lb-logo, .lb-top-bar {
+        display: none;
     }
 }
 
 @include media-breakpoint-down(sm) {
-    .lb-logo {
-        display: none;
-    }
-    .lb-main-holder {
-        padding-top: $lb-top-bar-height-sm + 10px;
-        .card {
-            .filter-holder {
-                border-top-right-radius: 0;
-                border-top-left-radius: 0;
-                .btn-group {
-                    .btn {
-                        font-size: $lb-text-smaller;
-                        line-height: 1.2;
-                        word-spacing: 100px;
-                    }
-                }
-            }
-        }
-        .card-no-card-mobile {
-            margin: 0px -15px;
-            border-radius: 0px;
-        }
-        .lb-main-header {
-            padding: 0px;
-        }
-        .lb-main-hints {
-            .alert {
-                margin-bottom: 0.5rem;
-                padding: 0.4rem 0.6rem;
-                h4 {
-                    margin: 0px;
-                }
-            }
-        }
-        .lb-main-stats {
-            display: none;
-        }
-    }
-    .lb-menu-holder {
-        min-height: $lb-top-bar-height-sm;
-        height: auto;
-        padding-top: 5px;
-    }
-    .lb-top-bar {
-        display: none;
-    }
-    .title-holder-sm {
-        display: inline-block;
-        position: fixed;
-        top: 0px;
-        left: 60px;
-        font-size: $lb-text-bigger;
-        line-height: $lb-top-bar-height-sm;
-        z-index: 100;
-    }
+
 }

@@ -1,11 +1,6 @@
 
 /* Side menu */
 .lb-menu-main {
-	img {
-		display: inline;
-		max-width: 50px !important;
-		margin-right: 5px;
-    }
     .navbar {
         padding: 0px;
         .navbar-toggler {
@@ -13,15 +8,20 @@
             border-radius: 0px;
         }
     }
+    .navbar-brand {
+        padding: 1rem;
+        img {
+            max-width: $lb-logo-width;
+        }
+    }
 	.navbar-nav {
 		display: inline-block;
 		width: 100%;
 	}
 	li {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem;
         border-bottom: 1px solid darken($gray-100, 5);
         @include media-breakpoint-down(sm) {
-            padding: 0.5rem;
             a {
                 font-size: $lb-text-small;
             }

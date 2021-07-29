@@ -8,15 +8,19 @@ h4 {
     font-size: $lb-text-smaller;
 }
 
+.back-to-top {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+}
+
 .clickable {
 	cursor: pointer;
 	cursor: hand;
 }
 
-.back-to-top {
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
+.i-left {
+    margin-right: 0.5rem;
 }
 
 .navbar-toggler:hover, .navbar-toggler:focus {
