@@ -15,58 +15,40 @@ $tile-padding: 10px;
         width: 100%;
         min-height: $tile-height;
 		border: 3px solid #fff;
-
 		.file-holder {
-			padding: 0px 16px;
-			.alert {
-				margin-bottom: 5px;
-				padding: 5px 0px;
-				a {
-					color: #3c763d;
-				}
+            .alert {
+                margin-bottom: 0.25rem;
+                padding: 0.5rem;
+            }
+            .alert:hover {
+				background-color: darken(#cff4fc, 5);
 			}
-			.alert:hover {
-				background-color: darken(#dff0d8, 10%);
-			}
-
-			.file-manager {
-				text-align: right;
-				margin-top: 5px;
-				padding-top: 5px;
-				border-top: 1px solid #fff;
-				a {
-					padding: 0px 5px;
-				}
-				a:hover {
-					text-decoration: underline;
-				}
-				a:first-of-type {
-					padding-left: 0px;
-				}
-			}
-		}
-		i {
-			padding-right: 5px;
+            .file-details {
+                display: flex;
+                align-items: center;
+            }
+            .file-name {
+                font-size: $font-size-base * 0.85;
+            }
 		}
         .image-holder {
 			width: $tile-width;
 			height: $tile-height;
 			float: left;
 			padding: $tile-padding;
-
-			a.image-option {
-				font-size: $font-size-base * 0.8;
-				text-align: center;
-			}
-
-			 .image-displayer {
-				 background-position: center;
-				 background-size: cover;
-				 img {
-					 border: 1px solid $gray-300;
-					 width: $tile-width;
-					 height: $tile-height - 50px;
-				 }
+            .btn-group {
+                .btn {
+                    border-radius: 0;
+                }
+            }
+            .image-displayer {
+                background-position: center;
+                background-size: cover;
+                img {
+                    border: 1px solid $gray-300;
+                    width: $tile-width;
+                    height: $tile-height - 50px;
+                }
 			 }
 		}
 		@include media-breakpoint-down(lg) {
