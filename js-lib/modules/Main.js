@@ -22,8 +22,6 @@ export default class Main extends spocky.Module
         l.$elems.Buttons_Panel((elem, keys) => {
             elem.addEventListener('click', (evt) => {
                 evt.preventDefault();
-                
-                console.log(this.panels[keys[0]].uri);
                 system.pager.setUri(this.panels[keys[0]].uri);
             });
         });
