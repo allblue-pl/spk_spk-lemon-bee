@@ -366,7 +366,7 @@ export default class System
                     pPanel.subpanels.set(subpanel.name, pSubpanel);
                 }
             } else if (pKey === 'alias')
-                pPanel[pKey] = encodeURIComponent(panel[pKey]);
+                pPanel[pKey] = panel[pKey];
             else
                 pPanel[pKey] = panel[pKey];
         }
