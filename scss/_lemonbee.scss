@@ -4,6 +4,12 @@ h4 {
     font-size: 1.3rem;
 }
 
+.alert {
+    p {
+        margin: 0;
+    }
+}
+
 .alert-hint {
     font-size: $lb-text-smaller;
 }

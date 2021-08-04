@@ -17,7 +17,7 @@
     align-self: center;
 	.lb-login-content {
         background-color: $gray-200;
-        border-bottom: 1rem solid $theme-secondary;
+        border-bottom: 1rem solid $theme-primary;
         box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
 		.alert {
 			margin-bottom: 1rem;
@@ -44,7 +44,6 @@
 		background-color: transparent;
 	}
 }
-
 
 /* Logout */
 .logout {

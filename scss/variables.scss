@@ -1,13 +1,14 @@
 
-$theme-primary: #00a0e3;
-$theme-secondary: #6196c5;
+$theme-primary: #6196c5;
+$theme-secondary: #525252;
+$theme-accent: #00a0e3;
 
 /* Bootstrap Variables Overwrites */
-$primary: $theme-primary;
-$link-color: $theme-primary;
-$link-hover-color: darken($theme-primary, 10);
+// $primary: $theme-accent;
+$link-color: $primary;
+$link-hover-color: darken($primary, 10);
 $theme-colors: (
-  primary: $primary,  // what about PINK?
+  primary: $primary,
   secondary: $gray-600,
   success: $green,
   info: $cyan,
@@ -30,7 +31,6 @@ $lb-text-smallest: $font-size-base * 0.6;
 
 $lb-top-bar-height: 64px;
 $lb-top-bar-height-sm: 50px;
-$lb-buttons-panel-height: 60px;
 
 /* colors */
 $lb-black: #191919;
@@ -44,27 +44,10 @@ $lb-gray-dark: #3b3b3b;
 $lb-gray-blue-dark: #2f353f;
 $lb-red: #ed1c24;
 
-// Overrides
-$primary: $theme-primary;
-$link-color: $primary;
-$link-hover-color: darken($primary, 10);
-$theme-colors: (
-  primary: $primary,
-  secondary: $gray-600,
-  success: $green,
-  info: $cyan,
-  warning: $yellow,
-  danger: $red,
-  light: $gray-100,
-  dark: $gray-800
-);
-
 /* </Custom Variables Definitions> */
-
 $text-main: #546b7d;
 $body-color: $text-main;
 
-$lb-top-bar-bg: $theme-primary;
 $lb-povered-by-bg: $gray-600;
 $lb-povered-by-link: $lb-blue-light;
 

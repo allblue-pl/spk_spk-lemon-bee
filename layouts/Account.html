@@ -1,40 +1,36 @@
 
-<div class="lb-main-header">
-    <div class="row no-gutters">
-        <div class="col-sm-6 d-none d-md-block">
-            <div class="row no-gutters">
-                <div class="col-auto">
-                    <a _elem="back" href="$uris.back" class="btn btn-theme-light mr-2">
-                        <i class="fa fa-chevron-left"></i>
-                    </a>
-                </div>
-                <div class="col">
-                    <h1>
-                        $lb.text('titles_Account')
-                    </h1>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col">
+        <h2>
+            <a href="$uris.back" class="btn btn-theme-light me-2">
+                <i class="fa fa-chevron-left"> </i>
+            </a>
+            $lb.text('titles_Account')
+        </h2>
     </div>
 </div>
 
-<div class="card card-form">
-    <div class="form px-2">
+<div class="card">
+    <div class="card-body">
         <form>
-            <spk-form-field form="ChangePassword" name="Password" type="Input" 
-                    input-type="password" label="$lb.text('labels_Password')"
-                    placeholder="$lb.text('labels_Password')..." />
-        
-            <spk-form-field form="ChangePassword" name="NewPassword" type="Input" 
-                    input-type="password" label="$lb.text('labels_NewPassword')"
-                    placeholder="$lb.text('labels_NewPassword')..." />
-        
-            <spk-form-field form="ChangePassword" name="NewPassword_Confirmation" type="Input" 
-                    input-type="password" placeholder="$lb.text('labels_NewPassword_Confirmation')..." />
-        
-            <div _show="message" class="alert alert-$messageType">$message</div>
-        
-            <button type="submit" _elem="changePassword" href="" class="btn btn-primary">
+            <div class="mb-2">
+                <spk-form-field form="ChangePassword" name="Password" type="Input" 
+                        input-type="password" label="$lb.text('labels_Password')"
+                        placeholder="$lb.text('labels_Password')..." />
+            </div>
+            <div class="mb-2">
+                <spk-form-field form="ChangePassword" name="NewPassword" type="Input" 
+                        input-type="password" label="$lb.text('labels_NewPassword')"
+                        placeholder="$lb.text('labels_NewPassword')..." />
+            </div>
+            <div class="mb-2">
+                <spk-form-field form="ChangePassword" name="NewPassword_Confirmation" type="Input" 
+                        input-type="password" placeholder="$lb.text('labels_NewPassword_Confirmation')..." />
+            </div>
+            <div class="mb-2">
+                <div _show="message" class="alert alert-$messageType">$message</div>
+            </div>
+            <button type="submit" _elem="changePassword" href="" class="btn btn-theme-primary w-100">
                 $lb.text('buttons_Save')
             </button>
         </form>
