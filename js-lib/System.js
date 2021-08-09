@@ -227,11 +227,6 @@ export default class System
             images: js0.Preset({
                 logo: [ 'string', js0.Default(null), ],
                 logo_Main: [ 'string', js0.Default(null), ],
-                messages: js0.Preset({
-                    loading: [ 'string', js0.Default(null), ],
-                    success: [ 'string', js0.Default(null), ],
-                    failure: [ 'string', js0.Default(null), ],
-                }),
             }),
             panels: this.panels_Preset,
             textFn: 'function',
@@ -240,6 +235,8 @@ export default class System
                 package: [ 'string', js0.Default(null) ],
                 // api: [ 'string' ],
             }),
+
+            spkMessages: [ js0.RawObject, js0.Default({}) ],
         }));
 
         this._actions = presets.actions;
@@ -266,7 +263,7 @@ export default class System
         this.setPanels(presets.panels);
         this.setup_Pager();
 
-        this.msgs = new spkMessages.Messages(this._images.messages);
+        this.msgs = new spkMessages.Messages(presets.spkMessages);
         
         this._module_Layout.$holders.msgs.$view = this.msgs;
     }
