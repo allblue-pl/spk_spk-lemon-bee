@@ -8,6 +8,7 @@
 }
 
 .lb-menu-holder {
+    position: fixed;
     padding: 0px;
     background-color: #fff;
     z-index: 11;
@@ -74,9 +75,6 @@
     }
 }
 @include media-breakpoint-down(md) {
-    .lb-content-holder .lb-main-holder {
-        padding-top: 1rem;
-    }
     .lb-menu-holder {
         min-height: auto !important;
     }
