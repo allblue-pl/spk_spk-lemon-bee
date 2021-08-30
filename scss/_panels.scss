@@ -62,7 +62,6 @@
 	width: 100%;
 	text-align: right;
 	background-color: $lb-povered-by-bg;
-
 	a {
 		color: $lb-povered-by-link;
 	}
@@ -73,26 +72,17 @@
     .lb-buttons-panel {
         margin-bottom: 1rem;
     }
-    .lb-menu-holder {
-        min-height: auto !important;
-        .lb-menu-main {
-            min-height: auto !important;
-        }
-    }
 }
 
 @include media-breakpoint-down(md) {
     .lb-menu-holder {
-        min-height: auto !important;
+        position: absolute;
+        height: auto !important;
         .lb-menu-main {
-            min-height: auto !important;
+            height: auto !important;
         }
     }
     .lb-logo, .lb-top-bar {
         display: none;
     }
-}
-
-@include media-breakpoint-down(sm) {
-
 }
