@@ -73,10 +73,20 @@
     .lb-buttons-panel {
         margin-bottom: 1rem;
     }
+    .lb-menu-holder {
+        min-height: auto !important;
+        .lb-menu-main {
+            min-height: auto !important;
+        }
+    }
 }
+
 @include media-breakpoint-down(md) {
     .lb-menu-holder {
         min-height: auto !important;
+        .lb-menu-main {
+            min-height: auto !important;
+        }
     }
     .lb-logo, .lb-top-bar {
         display: none;
