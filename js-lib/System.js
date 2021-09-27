@@ -46,12 +46,12 @@ export default class System
 
             alias: 'string',
             title: 'string',
-            faIcon: [ 'string', js0.Default(null), ],
-            image: [ 'string', js0.Default(null), ],
+            faIcon: [ 'string', js0.Null, js0.Default(null), ],
+            image: [ 'string', js0.Null, js0.Default(null), ],
             
             subpanels: js0.Iterable(js0.Preset({
                 name: 'string',
-                module: [ 'function', js0.Null ],
+                moduleFn: [ 'function', js0.Null ],
                 uri: [ 'string', js0.Null, js0.Default(null), ],
 
                 permissions: [ js0.Default([]), Array ],
@@ -225,14 +225,15 @@ export default class System
                 logIn: 'string',
             }),
             images: js0.Preset({
-                logo: [ 'string', js0.Default(null), ],
-                logo_Main: [ 'string', js0.Default(null), ],
+                logo: [ 'string', js0.Null, js0.Default(null), ],
+                logo_Main: [ 'string', js0.Null, js0.Default(null), ],
             }),
             panels: this.panels_Preset,
             textFn: 'function',
+            title: [ 'string', js0.Default('LemonBee') ],
             uris: js0.Preset({
                 base: [ 'string', js0.Default('') ],
-                package: [ 'string', js0.Default(null) ],
+                package: [ 'string', js0.Null, js0.Default(null) ],
                 // api: [ 'string' ],
             }),
 
@@ -243,6 +244,7 @@ export default class System
         this._aliases = presets.aliases;
         this._images = presets.images;
         this._textFn = presets.textFn;
+        this._title = presets.title;
         this._uris = presets.uris;
 
         if (this._images.logo === null)
@@ -325,8 +327,15 @@ export default class System
                     if (this._listeners_OnPage !== null)
                         this._listeners_OnPage();
 
+                    let moduleClass = subpanel.moduleFn();
+                    if (!js0.type(moduleClass, 'function')) {
+                        throw new Error(`'moduleFn' of subpanel ` + 
+                                `'${panel.name}.${subpanel.name}' is not a function.`);
+                    }
+
                     this.clear();
-                    this._setPanelModule(subpanel.module);
+                    this._setPanelModule(subpanel.moduleFn(), panel.title + ' - ' +
+                            subpanel.title);
                 });
             }
         }
@@ -372,7 +381,7 @@ export default class System
         this._panels.set(panel.name, pPanel);
     }
 
-    _setPanelModule(moduleClass)
+    _setPanelModule(moduleClass, title = null)
     {
         if (!this._user.loggedIn) {
             this.pager.setPage('lb.logIn', {}, {}, false);
@@ -383,6 +392,8 @@ export default class System
         this._mBody = new modules.Body(this);
         let module = new moduleClass(this, this._panels);
         this._mBody.setContent(module);
+
+        document.title = title === null ? this._title : title;
 
         this._module_Layout.$holders.content.$view = this._mBody;
     }
