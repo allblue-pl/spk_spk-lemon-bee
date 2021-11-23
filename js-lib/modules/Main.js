@@ -12,7 +12,7 @@ export default class Main extends spocky.Module
 
     constructor(system) 
     { super();
-        js0.args(arguments, require('../System'), Map);
+        js0.args(arguments, require('../System'));
 
         this.panels = system.getPanels();
 

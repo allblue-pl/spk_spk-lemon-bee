@@ -52,7 +52,7 @@ export default class System
             subpanels: js0.Iterable(js0.Preset({
                 name: 'string',
                 moduleFn: [ 'function', js0.Null ],
-                uri: [ 'string', js0.Null, js0.Default(null), ],
+                uri: [ 'boolean', js0.Null, js0.Default(null), ],
 
                 permissions: [ js0.Default([]), Array ],
 
@@ -277,7 +277,7 @@ export default class System
                 this._listeners_OnPage();
 
             this.clear();
-            this._setPanelModule(modules.Main);
+            this._setPanelModule(new modules.Main(this));
         });
         this._uris.main = this.pager.getPageUri('lb.main');
 
@@ -327,14 +327,14 @@ export default class System
                     if (this._listeners_OnPage !== null)
                         this._listeners_OnPage();
 
-                    let moduleClass = subpanel.moduleFn();
-                    if (!js0.type(moduleClass, 'function')) {
+                    let module = subpanel.moduleFn(this);
+                    if (!js0.type(module, spocky.Module)) {
                         throw new Error(`'moduleFn' of subpanel ` + 
-                                `'${panel.name}.${subpanel.name}' is not a function.`);
+                                `'${panel.name}.${subpanel.name}' does not return spocky.Module`);
                     }
 
                     this.clear();
-                    this._setPanelModule(subpanel.moduleFn(), panel.title + ' - ' +
+                    this._setPanelModule(module, panel.title + ' - ' +
                             subpanel.title);
                 });
             }
@@ -381,7 +381,7 @@ export default class System
         this._panels.set(panel.name, pPanel);
     }
 
-    _setPanelModule(moduleClass, title = null)
+    _setPanelModule(module, title = null)
     {
         if (!this._user.loggedIn) {
             this.pager.setPage('lb.logIn', {}, {}, false);
@@ -390,7 +390,6 @@ export default class System
         }
 
         this._mBody = new modules.Body(this);
-        let module = new moduleClass(this, this._panels);
         this._mBody.setContent(module);
 
         document.title = title === null ? this._title : title;
