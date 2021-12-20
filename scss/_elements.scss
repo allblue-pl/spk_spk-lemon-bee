@@ -1,0 +1,127 @@
+
+.lb-buttons-panel {
+    .btn-group {
+        .btn {
+            border: 1px solid $gray-100 !important;
+            font-size: 0.875rem;
+        }
+    }
+}
+
+.lb-filter-holder {
+    padding: 0.5rem;
+    .lb-date-picker {
+        .form-control {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    }
+    @include media-breakpoint-down(xl) {
+        .lb-date-picker {
+            padding-top: 0.5rem;
+        }
+    }
+}
+
+.lb-logo {
+    padding: 1rem;
+    img {
+        max-height: $lb-logo-height;
+        max-width: 100%;
+    }
+}
+
+.lb-main-header {
+    .lb-title {
+        padding: 0;
+        h1 {
+            margin-bottom: 0;
+            font-size: $font-size-base * 1.8;
+        }
+    }
+    .row {
+        align-items: center;
+    }
+    @include media-breakpoint-down(xl) {
+        .lb-back, .lb-title {
+            padding-bottom: 0.75rem;
+        }
+    }
+}
+
+.lb-main-hints {
+    .alert {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+    h4 {
+        margin: 0;
+    }
+    p {
+        margin: 0;
+    }
+}
+
+.lb-povered-by {
+	padding: 5px;
+	color: #fff;
+	width: 100%;
+	text-align: right;
+	background-color: $lb-povered-by-bg;
+	a {
+		color: $lb-povered-by-link;
+	}
+}
+
+.lb-title-sm {
+    display: inline-block;
+    position: fixed;
+    top: 0px;
+    left: 60px;
+    font-size: $lb-text-bigger;
+    line-height: $lb-top-bar-height-sm;
+    z-index: 100;
+}
+
+.lb-top-bar {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: $lb-top-bar-height;
+    background-color: $theme-secondary;
+    z-index: 10;
+}
+
+.lb-user-info {
+    height: $lb-top-bar-height;
+    padding-right: 15px;
+	text-align: right;
+	line-height: $lb-top-bar-height;
+	color: $lb-blue-light;
+	a {
+		color: #fff;
+	}
+	i {
+		color: $lb-blue-light;
+	}
+	img {
+		display: inline;
+		max-height: $lb-top-bar-height - 20px;
+	}
+	@include media-breakpoint-down(sm) {
+		height: auto;
+		text-align: left;
+	}
+}
+
+/* MEDIA */
+@include media-breakpoint-down(lg) {
+    
+}
+@include media-breakpoint-down(md) {
+    .lb-logo, .lb-top-bar {
+        display: none;
+    }
+}
+

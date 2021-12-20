@@ -1,3 +1,4 @@
+
 /* Tables */
 table {
     @extend .table-hover;
@@ -54,15 +55,15 @@ table {
 	}
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
     table {
         font-size: $lb-text-small;
         thead {
             font-size: $lb-text-small;
         }
         td {
-            padding-top: 0.75rem !important;
-            padding-bottom: 0.75rem !important;
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
         }
     }
 }

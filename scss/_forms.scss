@@ -1,10 +1,5 @@
 
 /* forms */
-.alert-narrow {
-    margin-bottom: 1rem;
-    padding: 0.25rem 0.5rem;
-}
-
 .checkbox-holder {
     display: flex;
     align-items: flex-end;
@@ -28,8 +23,29 @@
     }
 }
 
-
-.tags-holder {
-    
+/* forms */
+/* form field with additional information below inputbox */
+.lb-form-filed-message {
+	.form-group {
+		margin-bottom: 5px;
+		p.error {
+			margin-bottom: 0px;
+		}
+	}
+}
+.lb-form-infotext {
+	padding-left: 5px;
+	color: $lb-blue;
 }
 
+.lb-no-label {
+    .form-label {
+        display: none;
+    }
+}
+
+.small {
+    .form-label {
+        margin-bottom: 0;
+    }
+}

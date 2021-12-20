@@ -1,39 +1,4 @@
 
- .lb-logo {
-    padding: 1rem;
-    img {
-        width: $lb-logo-width;
-        max-width: 100%;
-    }
-}
-
-.lb-menu-holder {
-    position: fixed;
-    padding: 0px;
-    background-color: #fff;
-    z-index: 11;
-}
-
-.lb-content-holder {
-    min-height: 100%;
-    background-color: $gray-200;
-    .lb-main-holder {
-        padding-top: $lb-top-bar-height + 15px;
-        .lb-main-hints {
-            margin: 0.5rem 0;
-        }
-    }
-}
-
-.lb-top-bar {
-    position: fixed;
-    top: 0px;
-    left: 0;
-    width: 100%;
-    height: $lb-top-bar-height;
-    background-color: $theme-secondary;
-    z-index: 10;
-}
 
 /* Panels */
 .lb-panel-fixed {
@@ -53,36 +18,5 @@
     }
     .flex-box-fill {
         flex: 1;
-    }
-}
-
-.lb-povered-by {
-	padding: 5px;
-	color: #fff;
-	width: 100%;
-	text-align: right;
-	background-color: $lb-povered-by-bg;
-	a {
-		color: $lb-povered-by-link;
-	}
-}
-
-/* MEDIA */
-@include media-breakpoint-down(lg) {
-    .lb-buttons-panel {
-        margin-bottom: 1rem;
-    }
-}
-
-@include media-breakpoint-down(md) {
-    .lb-menu-holder {
-        position: absolute;
-        height: auto !important;
-        .lb-menu-main {
-            height: auto !important;
-        }
-    }
-    .lb-logo, .lb-top-bar {
-        display: none;
     }
 }
