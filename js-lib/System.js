@@ -122,6 +122,7 @@ export default class System
 
     clear()
     {
+        this._mBody = null;
         this.msgs.hide();
     }
 
@@ -173,7 +174,7 @@ export default class System
         if (this._mBody === null)
             throw new Error('No active panel.');
 
-        this._mBody.lMenu.$fields.hasBackButton = hasBackButton;
+        this._mBody.lMenu.$fields.HasBackButton = hasBackButton;
     }
 
     setListener_OnBack(listener)
@@ -277,6 +278,7 @@ export default class System
                 this._listeners_OnPage();
 
             this.clear();
+            this._setBodyModule(new modules.Body(this));
             this._setPanelModule(new modules.Main(this));
         });
         this._uris.main = this.pager.getPageUri('lb.main');
@@ -299,7 +301,8 @@ export default class System
                 this._listeners_OnPage();
 
             this.clear();
-            this._setPanelModule(modules.Account);
+            this._setBodyModule(new modules.Body(this));
+            this._setPanelModule(new modules.Account(this));
         });
         this._uris.account = this.pager.getPageUri('lb.account');
 
@@ -327,13 +330,15 @@ export default class System
                     if (this._listeners_OnPage !== null)
                         this._listeners_OnPage();
 
+                    this.clear();
+
+                    this._setBodyModule(new modules.Body(this));
                     let module = subpanel.moduleFn(this);
                     if (!js0.type(module, spocky.Module)) {
                         throw new Error(`'moduleFn' of subpanel ` + 
                                 `'${panel.name}.${subpanel.name}' does not return spocky.Module`);
                     }
 
-                    this.clear();
                     this._setPanelModule(module, panel.title + ' - ' +
                             subpanel.title);
                 });
@@ -381,15 +386,22 @@ export default class System
         this._panels.set(panel.name, pPanel);
     }
 
+    _setBodyModule(module)
+    {
+        this._mBody = module;
+    }
+
     _setPanelModule(module, title = null)
     {
+        if (this._mBody === null)
+            throw new Error('Body module not set.');
+
         if (!this._user.loggedIn) {
             this.pager.setPage('lb.logIn', {}, {}, false);
             // window.location = this._uris.base + this._aliases.logIn;
             return;
         }
 
-        this._mBody = new modules.Body(this);
         this._mBody.setContent(module);
 
         document.title = title === null ? this._title : title;
