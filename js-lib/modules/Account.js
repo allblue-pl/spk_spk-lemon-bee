@@ -39,7 +39,7 @@ export default class Account extends spocky.Module
                 fields: {
                     NewPassword: {
                         valid: false,
-                        errors: [ this.system.text('errors_PasswordCannotBeEmpty') ],
+                        errors: [ this.system.text('Errors_PasswordCannotBeEmpty') ],
                     },
                 },
             });
@@ -52,7 +52,7 @@ export default class Account extends spocky.Module
                 fields: {
                     NewPassword_Confirmation: {
                         valid: false,
-                        errors: [ this.system.text('errors_PasswordsDoNotMatch') ],
+                        errors: [ this.system.text('Errors_PasswordsDoNotMatch') ],
                     },
                 },
             });
