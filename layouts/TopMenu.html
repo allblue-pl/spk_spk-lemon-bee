@@ -16,7 +16,7 @@
         </button>
         <!-- Navbar links -->
         <div _elem="Menu" class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav clearfix">
                 <li class="nav-item">
                     <a _elem="menuItem_Home" class="nav-link" href="$lb.uris.base">
                         <i class="fa fa-home" aria-hidden="true"></i>&nbsp;
@@ -31,17 +31,14 @@
                         $item.title
                     </a>
                 </li>
-                
             </ul>
-
-            <hr />
-            <div class="clear">
+            <div class="lb-user-info-sm">
                 <i class="fa fa-user pe-2" aria-hidden="true"></i>
-                <a href="$lb.uris.account">
-                    Login $lb.user.login
+                <a class="w-100" href="$lb.uris.account">
+                    $lb.user.login
                 </a>
-                <a _elem="LogOut" href="$lb.uris.logOut" class="btn btn-theme-light btn-sm ms-3">
-                    Log out $lb.text('userInfo_LogOut')
+                <a _elem="LogOut" href="$lb.uris.logOut" class="btn btn-theme-light btn-sm w-100 mt-2">
+                    $lb.text('UserInfo_LogOut')
                 </a>
             </div>
         </div>

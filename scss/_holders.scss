@@ -19,6 +19,22 @@
     }
 }
 
+.lb-filter-holder {
+    padding: 0.5rem;
+    .lb-date-picker {
+        .form-control {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    }
+    @include media-breakpoint-down(xl) {
+        .lb-date-picker {
+            padding-top: 0.5rem;
+        }
+    }
+}
+
+
 .lb-menu-holder {
     position: fixed;
     padding: 0px;

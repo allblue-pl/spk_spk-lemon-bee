@@ -8,21 +8,6 @@
     }
 }
 
-.lb-filter-holder {
-    padding: 0.5rem;
-    .lb-date-picker {
-        .form-control {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-        }
-    }
-    @include media-breakpoint-down(xl) {
-        .lb-date-picker {
-            padding-top: 0.5rem;
-        }
-    }
-}
-
 .lb-logo {
     padding: 1rem;
     img {
@@ -113,6 +98,12 @@
 		height: auto;
 		text-align: left;
 	}
+}
+.lb-user-info-sm {
+    background-color: $gray-200;
+    padding: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5rem solid $theme-accent;
 }
 
 /* MEDIA */
