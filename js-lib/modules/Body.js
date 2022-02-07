@@ -30,31 +30,7 @@ export default class Body extends spocky.Module
 
         this.lUserInfo.$elems.logOut.addEventListener('click', (evt) => {
             evt.preventDefault();
-            system.msgs.showLoading();
-            system.actions.logOut_Async()
-                .then((result) => {
-                    console.log(result);
-
-                    if (!result.success) {
-                        system.msgs.showMessage_Failure(result.error);
-                        system.msgs.hideLoading();
-
-                        return;
-                    }
-
-                    system.setUser({
-                        loggedIn: false,
-                        login: '',
-                        permissions: [],
-                    });
-
-                    system.msgs.hideLoading();
-
-                    system.pager.setPage('lb.logIn');
-                })
-                .catch((e) => {
-                    console.error(e);
-                });
+            system.logOut();
         });
 
         l.$holders.topMenu.$view = this.lMenu;
@@ -127,6 +103,12 @@ export default class Body extends spocky.Module
             });
         }
         l.$fields.menuItems = items;
+
+        /* User Info */
+        l.$elems.LogOut.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            this.system.logOut();
+        });
 
         return l;
     }

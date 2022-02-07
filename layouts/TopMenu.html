@@ -31,7 +31,19 @@
                         $item.title
                     </a>
                 </li>
+                
             </ul>
+
+            <hr />
+            <div class="clear">
+                <i class="fa fa-user pe-2" aria-hidden="true"></i>
+                <a href="$lb.uris.account">
+                    Login $lb.user.login
+                </a>
+                <a _elem="LogOut" href="$lb.uris.logOut" class="btn btn-theme-light btn-sm ms-3">
+                    Log out $lb.text('userInfo_LogOut')
+                </a>
+            </div>
         </div>
     </nav>
 </div>

@@ -52,7 +52,7 @@ export default class System
             subpanels: js0.Iterable(js0.Preset({
                 name: 'string',
                 moduleFn: [ 'function', js0.Null ],
-                uri: [ 'boolean', js0.Null, js0.Default(null), ],
+                uri: [ 'string', js0.Null, js0.Default(null), ],
 
                 permissions: [ js0.Default([]), Array ],
 
@@ -167,6 +167,33 @@ export default class System
         return allowedPanels;
     }
 
+    logOut()
+    {
+        this.msgs.showLoading();
+        this.actions.logOut_Async()
+            .then((result) => {
+                if (!result.success) {
+                    this.msgs.showMessage_Failure(result.error);
+                    this.msgs.hideLoading();
+
+                    return;
+                }
+
+                this.setUser({
+                    loggedIn: false,
+                    login: '',
+                    permissions: [],
+                });
+
+                this.msgs.hideLoading();
+
+                this.pager.setPage('lb.logIn');
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    }
+
     setBackButton(hasBackButton)
     {
         js0.args(arguments, 'boolean');
@@ -262,6 +289,7 @@ export default class System
         this._uris.base = this.pager.base + this._uris.base;
         if (this._uris.package === null)
             this._uris.package = this._uris.base + 'dev/node_modules/spk-lemon-bee/';
+        this._uris.logOut = this._uris.base;
 
         this.setPanels(presets.panels);
         this.setup_Pager();
