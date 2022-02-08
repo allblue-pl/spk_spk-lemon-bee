@@ -93,6 +93,9 @@ export default class System
             logIn: 'log-in',
         };
         this._images = {};
+        this._shows = {
+            userInfo: true,
+        };
         this._textFn = null;
         this._uris = {
             base: pager.base,
@@ -136,8 +139,11 @@ export default class System
 
     getFields()
     {
+        console.log(this._shows);
+
         return {
             images: this._images,
+            shows: this._shows,
             text: (text) => {
                 return this.text(text);
             },
@@ -230,7 +236,8 @@ export default class System
 
     setUser(user)
     {
-        js0.args(arguments, js0.Preset({
+        js0.args(arguments, js0.RawObject);
+        js0.typeE(user, js0.Preset({
             loggedIn: 'boolean',                
             login: 'string',
             permissions: Array,
@@ -241,7 +248,8 @@ export default class System
 
     setup(presets)
     {
-        js0.args(arguments, js0.Preset({
+        js0.args(arguments, js0.RawObject);
+        js0.typeE(presets, js0.Preset({
             actions: js0.Preset({
                 changePassword_Async: 'function',
                 logIn_Async: 'function',
@@ -257,6 +265,9 @@ export default class System
                 logo_Main: [ 'string', js0.Null, js0.Default(null), ],
             }),
             panels: this.panels_Preset,
+            shows: [ js0.Preset({
+                userInfo: [ 'boolean', js0.Default(true) ],
+            }), js0.Default({}) ],
             textFn: 'function',
             title: [ 'string', js0.Default('LemonBee') ],
             uris: js0.Preset({
@@ -268,9 +279,12 @@ export default class System
             spkMessages: [ js0.RawObject, js0.Default({}) ],
         }));
 
+        console.log('Test', presets.shows);
+
         this._actions = presets.actions;
         this._aliases = presets.aliases;
         this._images = presets.images;
+        this._shows = presets.shows;
         this._textFn = presets.textFn;
         this._title = presets.title;
         this._uris = presets.uris;
