@@ -34,14 +34,6 @@
     }
 }
 
-
-.lb-menu-holder {
-    position: fixed;
-    padding: 0px;
-    background-color: #fff;
-    z-index: 11;
-}
-
 .lb-settings-holder {
     h4 {
         margin-bottom: 0.5rem;
@@ -54,22 +46,10 @@
 
 /* MEDIA */
 @include media-breakpoint-down(md) {
-    .lb-menu-holder {
-        position: absolute;
-        height: auto !important;
-        .lb-menu-main {
-            height: auto !important;
-        }
-    }
     .lb-content-holder {
         .lb-main-holder {
             padding-top: $lb-top-bar-height-sm + 10px;
         }
-    }
-    .lb-menu-holder {
-        min-height: $lb-top-bar-height-sm;
-        height: auto;
-        padding-top: 5px;
     }
     .lb-top-bar {
         display: none;

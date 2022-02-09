@@ -1,13 +1,23 @@
 
 /* Side menu */
+.lb-menu-holder {
+    position: fixed;
+    padding: 0px;
+    background-color: #fff;
+    z-index: 11;
+}
+
 .lb-menu-main {
-    height: calc(100vh - #{$lb-top-bar-height});
+    height: calc(100vh - #{$lb-logo-height + $lb-logo-padding});
     overflow-y: auto;
     .navbar {
         padding: 0px;
         .navbar-toggler {
             border-color: #fff;
             border-radius: 0px;
+        }
+        .lb-navbar-back {
+            padding-top: 0.6rem;
         }
     }
 	.navbar-nav {
@@ -60,6 +70,23 @@
 }
 
 /* Media */
+@include media-breakpoint-down(md) {
+    .lb-menu-holder {
+        height: auto !important;
+        .lb-menu-main {
+            height: auto !important;
+            .navbar-collapse {
+                max-height: calc(100vh - #{$lb-top-bar-height-sm});
+                overflow-y: auto;
+            }
+        }
+    }
+    .lb-menu-holder {
+        min-height: $lb-top-bar-height-sm;
+        height: auto;
+        padding-top: 5px;
+    }
+}
 @include media-breakpoint-down(sm) {
     .lb-menu-tiles {
         .card {

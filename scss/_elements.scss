@@ -9,7 +9,7 @@
 }
 
 .lb-logo {
-    padding: 1rem;
+    padding: $lb-logo-padding;
     img {
         max-height: $lb-logo-height;
         max-width: 100%;
