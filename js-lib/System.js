@@ -139,9 +139,8 @@ export default class System
 
     getFields()
     {
-        console.log(this._shows);
-
         return {
+            dev: this._dev,
             images: this._images,
             shows: this._shows,
             text: (text) => {
@@ -260,6 +259,10 @@ export default class System
                 main: 'string',
                 logIn: 'string',
             }),
+            dev: js0.Preset({
+                login: [ 'string', js0.Default('') ],
+                password: [ 'string', js0.Default('') ],
+            }),
             images: js0.Preset({
                 logo: [ 'string', js0.Null, js0.Default(null), ],
                 logo_Main: [ 'string', js0.Null, js0.Default(null), ],
@@ -279,10 +282,9 @@ export default class System
             spkMessages: [ js0.RawObject, js0.Default({}) ],
         }));
 
-        console.log('Test', presets.shows);
-
         this._actions = presets.actions;
         this._aliases = presets.aliases;
+        this._dev = presets.dev;
         this._images = presets.images;
         this._shows = presets.shows;
         this._textFn = presets.textFn;
