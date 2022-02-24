@@ -81,9 +81,9 @@ export default class System
     }
 
 
-    constructor(pager)
+    constructor(pager, msgs)
     {
-        js0.args(arguments, abPager.Pager)
+        js0.args(arguments, abPager.Pager, spkMessages.Messages)
 
         this._initialized = false;
 
@@ -116,7 +116,7 @@ export default class System
         this._module.$view = this._module_Layout;
         
         this.pager = pager;
-        this.msgs = null;
+        this.msgs = msgs;
 
         this._mBody = null;
 
@@ -253,13 +253,18 @@ export default class System
                 changePassword_Async: 'function',
                 logIn_Async: 'function',
                 logOut_Async: 'function',
+                remindPassword_Async: [ 'function', js0.Null, js0.Default(null) ],
+                resetPassword_Async: [ 'function', js0.Null, js0.Default(null) ],
             }),
             aliases: js0.Preset({
-                account: 'string',
-                main: 'string',
-                logIn: 'string',
+                account: [ 'string', js0.Default('account') ],
+                main: [ 'string', js0.Default('') ],
+                logIn: [ 'string', js0.Default('log-in') ],
+                remindPassword: [ 'string', js0.Default('remind-password') ],
+                resetPassword: [ 'string', js0.Default('reset-password') ],
             }),
             dev: js0.Preset({
+                email: [ 'string', js0.Default('') ],
                 login: [ 'string', js0.Default('') ],
                 password: [ 'string', js0.Default('') ],
             }),
@@ -279,7 +284,7 @@ export default class System
                 // api: [ 'string' ],
             }),
 
-            spkMessages: [ js0.RawObject, js0.Default({}) ],
+            spkMessages: spkMessages.Messages,
         }));
 
         this._actions = presets.actions;
@@ -310,9 +315,9 @@ export default class System
         this.setPanels(presets.panels);
         this.setup_Pager();
 
-        this.msgs = new spkMessages.Messages(presets.spkMessages);
+        // this.msgs = spkMessages;
         
-        this._module_Layout.$holders.msgs.$view = this.msgs;
+        // this._module_Layout.$holders.msgs.$view = this.msgs;
     }
 
     setup_Pager()
@@ -331,13 +336,46 @@ export default class System
             if (this._listeners_OnPage !== null)
                 this._listeners_OnPage();
 
+            this.clear();
+
             if (this._user.loggedIn) {               
-                this.clear();
                 this.pager.setPage('lb.main');
                 return;
             }
 
             this._module_Layout.$holders.content.$view = new modules.LogIn(this);
+        });
+
+        this.pager.page('lb.remindPassword', this._aliases.remindPassword, () => {
+            if (this._listeners_OnPage !== null)
+                this._listeners_OnPage();
+
+            this.clear();
+
+            if (this._user.loggedIn) {               
+                this.pager.setPage('lb.main');
+                return;
+            }
+
+            this._module_Layout.$holders.content.$view = 
+                    new modules.RemindPassword(this);
+        });
+        this._uris.remindPassword = this.pager.getPageUri('lb.remindPassword');
+
+        this.pager.page('lb.resetPassword', this._aliases.resetPassword + 
+                '/:resetPasswordHash', () => {
+            if (this._listeners_OnPage !== null)
+                this._listeners_OnPage();
+
+            this.clear();
+
+            if (this._user.loggedIn) {               
+                this.pager.setPage('lb.main');
+                return;
+            }
+
+            this._module_Layout.$holders.content.$view = 
+                    new modules.ResetPassword(this);
         });
         
         this.pager.page('lb.account', this._aliases.account, () => {

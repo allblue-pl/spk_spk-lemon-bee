@@ -1,13 +1,13 @@
 <div class="login-info">
-    <form _elem="form" method="post" role="form" name="form" id="form" >
-        <input _elem="login"
-            placeholder="$lb.text('LogIn_Login_Placeholder')"
-            value="$lb.dev.login"
-            type="text" required="" class="form-control"/>
-        <input _elem="password"
-            placeholder="$lb.text('LogIn_Password_Placeholder')"
-            value="$lb.dev.password"
-            type="password" required="" class="form-control" />
+    <form _elem="Form" method="post" role="form" name="form" id="form" >
+        <input _elem="Login"
+                placeholder="$lb.text('LogIn_Login_Placeholder')"
+                value="$lb.dev.login"
+                type="text" required="" class="form-control"/>
+        <input _elem="Password"
+                placeholder="$lb.text('LogIn_Password_Placeholder')"
+                value="$lb.dev.password"
+                type="password" required="" class="form-control" />
 
         <div _show="error.show" class="alert alert-danger alert-narrow">
             <p>$error.message</p>
@@ -15,6 +15,10 @@
         <button type="submit" class="btn btn-theme-primary w-100">
             $lb.text('LogIn_LogIn')
         </button>
+
+        <a _elem="RemindPassword" href="$lb.uris.remindPassword">
+            $lb.text('RemindPassword')
+        </a>
     </form>
     <div _holder="notifications"></div>
 </div>

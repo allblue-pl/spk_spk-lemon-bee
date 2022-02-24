@@ -20,18 +20,20 @@ export default class LogIn extends spocky.Module
         this.l = system.createLayout($layouts.LogIn);
         this.lForm = system.createLayout($layouts.LogIn_Form);
 
-        this.lForm.$fields.login = '';
-        this.lForm.$fields.password = '';
-
-        this.lForm.$elems.form.addEventListener('submit', (evt) => {
+        this.lForm.$elems.Form.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this.logIn();
         });
-        this.lForm.$elems.login.addEventListener('change', (evt) => {
+        this.lForm.$elems.Login.addEventListener('change', (evt) => {
             this.clearError();
         });
-        this.lForm.$elems.password.addEventListener('change', (evt) => {
+        this.lForm.$elems.Password.addEventListener('change', (evt) => {
             this.clearError();
+        });
+
+        this.lForm.$elems.RemindPassword.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            this.lb.pager.setPage('lb.remindPassword');
         });
 
         this.l.$holders.form.$view = this.lForm;
@@ -51,8 +53,8 @@ export default class LogIn extends spocky.Module
     {
         this.lb.msgs.showLoading();
 
-        this.lb.actions.logIn_Async(this.lForm.$elems.login.value,
-                this.lForm.$elems.password.value)
+        this.lb.actions.logIn_Async(this.lForm.$elems.Login.value,
+                this.lForm.$elems.Password.value)
             .then((result) => {
                 if (result.user.loggedIn) {
                     this.lForm.$fields.error = {
