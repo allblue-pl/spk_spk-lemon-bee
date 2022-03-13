@@ -34,6 +34,16 @@
     @include button-variant($theme-primary, darken($theme-primary, 5), darken($theme-primary, 10), darken($theme-primary, 10));
 }
 
+.btn-theme-secondary {
+    color: #fff!important;
+    @include button-variant($theme-secondary, darken($theme-secondary, 5), darken($theme-secondary, 10), darken($theme-secondary, 10));
+}
+
+.btn-theme-accent {
+    color: #fff!important;
+    @include button-variant($theme-accent, darken($theme-accent, 5), darken($theme-accent, 10), darken($theme-accent, 10));
+}
+
 // @mixin button-variant(
 //   $background,
 //   $border,
