@@ -142,6 +142,7 @@ export default class System
         return {
             dev: this._dev,
             images: this._images,
+            settings: this._settings,
             shows: this._shows,
             text: (text) => {
                 return this.text(text);
@@ -285,12 +286,17 @@ export default class System
             }),
 
             spkMessages: spkMessages.Messages,
+            
+            settings: js0.Preset({
+                hasRemindPassword: [ js0.Default(true), 'boolean' ],
+            }),
         }));
 
         this._actions = presets.actions;
         this._aliases = presets.aliases;
         this._dev = presets.dev;
         this._images = presets.images;
+        this._settings = presets.settings;
         this._shows = presets.shows;
         this._textFn = presets.textFn;
         this._title = presets.title;

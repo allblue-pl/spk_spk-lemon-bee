@@ -16,7 +16,8 @@
             $lb.text('LogIn_LogIn')
         </button>
 
-        <a _elem="RemindPassword" href="$lb.uris.remindPassword">
+        <a _elem="RemindPassword" _show="lb.settings.hasRemindPassword" 
+                href="$lb.uris.remindPassword">
             $lb.text('RemindPassword')
         </a>
     </form>
