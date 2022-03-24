@@ -126,7 +126,7 @@ export default class System
     clear()
     {
         this._mBody = null;
-        this.msgs.hide();
+        // this.msgs.hide();
     }
 
     createLayout(layoutClass)
