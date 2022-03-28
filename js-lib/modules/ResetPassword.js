@@ -81,6 +81,10 @@ export default class ResetPassword extends spocky.Module
                 }
 
                 this.lb.msgs.hideLoading();
+            })
+            .catch((e) => {
+                console.error(e.stack);
+                this.lb.msgs.showMessage_Failure(e.toString());
             });
     }
 

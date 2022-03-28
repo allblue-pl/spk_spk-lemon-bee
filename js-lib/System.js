@@ -196,7 +196,8 @@ export default class System
                 this.pager.setPage('lb.logIn');
             })
             .catch((e) => {
-                console.error(e);
+                console.error(e.stack);
+                this.msgs.showMessage_Failure(e.toString());
             });
     }
 
