@@ -41,6 +41,15 @@ export default class Body extends spocky.Module
         this.$view = l;
     }
 
+    call_OnBack()
+    {
+        if (this._listeners_OnBack === null)
+            return false;
+
+        this._listeners_OnBack();
+        return true;
+    }
+
     setContent(content)
     {
         js0.args(arguments, [ spocky.Layout, spocky.Module ]);

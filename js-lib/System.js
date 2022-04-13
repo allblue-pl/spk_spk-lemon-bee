@@ -123,6 +123,19 @@ export default class System
         this._listeners_OnPage = null;
     }
 
+    call_OnBack()
+    {
+        if (this._mBody.call_OnBack())
+            return true;
+
+        if (this.pager.current.name !== 'lb.main') {
+            this.pager.setPage('lb.main');
+            return true;
+        }
+
+        return false;
+    }
+
     clear()
     {
         this._mBody = null;
