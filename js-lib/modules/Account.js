@@ -26,6 +26,8 @@ export default class Account extends spocky.Module
             this.changePassword();
         });
 
+        system.msgs.hideLoading();
+
         this.$view = this.l;
     }
 

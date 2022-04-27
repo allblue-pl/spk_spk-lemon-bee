@@ -278,11 +278,11 @@ export default class System
                 remindPassword: [ 'string', js0.Default('remind-password') ],
                 resetPassword: [ 'string', js0.Default('reset-password') ],
             }),
-            dev: js0.Preset({
+            dev: [ js0.Preset({
                 email: [ 'string', js0.Default('') ],
                 login: [ 'string', js0.Default('') ],
                 password: [ 'string', js0.Default('') ],
-            }),
+            }), js0.Default({}) ],
             images: js0.Preset({
                 logo: [ 'string', js0.Null, js0.Default(null), ],
                 logo_Main: [ 'string', js0.Null, js0.Default(null), ],
@@ -298,12 +298,10 @@ export default class System
                 package: [ 'string', js0.Null, js0.Default(null) ],
                 // api: [ 'string' ],
             }),
-
-            spkMessages: spkMessages.Messages,
             
-            settings: js0.Preset({
+            settings: [ js0.Preset({
                 hasRemindPassword: [ js0.Default(true), 'boolean' ],
-            }),
+            }), js0.Default({}) ],
         }));
 
         this._actions = presets.actions;

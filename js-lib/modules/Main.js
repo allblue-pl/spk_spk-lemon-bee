@@ -33,6 +33,8 @@ export default class Main extends spocky.Module
             });
         });
 
+        system.msgs.hideLoading();
+
         this.$view = l;
     }
 

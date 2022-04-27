@@ -32,6 +32,8 @@ export default class ResetPassword extends spocky.Module
             this.clearError();
         });
 
+        system.msgs.hideLoading();
+
         this.$view = this.l;
     }
 

@@ -24,6 +24,8 @@ export default class RemindPassword extends spocky.Module
             this.remindPassword();
         });
 
+        system.msgs.hideLoading();
+
         this.$view = this.l;
     }
 

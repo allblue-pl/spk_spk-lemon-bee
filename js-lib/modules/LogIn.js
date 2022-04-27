@@ -38,6 +38,8 @@ export default class LogIn extends spocky.Module
 
         this.l.$holders.form.$view = this.lForm;
 
+        system.msgs.hideLoading();
+
         this.$view = this.l;
     }
 
@@ -56,7 +58,19 @@ export default class LogIn extends spocky.Module
         this.lb.actions.logIn_Async(this.lForm.$elems.Login.value,
                 this.lForm.$elems.Password.value)
             .then((result) => {
-                if (result.user.loggedIn) {
+                let user = {
+                    loggedIn: false,
+                    login: '',
+                    permissions: [],
+                };
+                if (result.user !== null) 
+                    user = result.user;
+                // if (result.error !== null) {
+                //     this.lb.msgs.showMessage_Failure(result.error);
+                //     return;
+                // }
+
+                if (user.loggedIn) {
                     this.lForm.$fields.error = {
                         show: false,
                         message: '',
