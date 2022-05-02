@@ -346,7 +346,7 @@ export default class System
 
             this.clear();
             this._setBodyModule(new modules.Body(this));
-            this._setPanelModule(new modules.Main(this));
+            this._setPanelModule(new modules.Main(this), this._title);
         });
         this._uris.main = this.pager.getPageUri('lb.main');
 
@@ -362,6 +362,7 @@ export default class System
             }
 
             this._module_Layout.$holders.content.$view = new modules.LogIn(this);
+            document.title = this._title + ' - ' + this.text('Titles_LogIn');
         });
 
         this.pager.page('lb.remindPassword', this._aliases.remindPassword, () => {
@@ -377,6 +378,8 @@ export default class System
 
             this._module_Layout.$holders.content.$view = 
                     new modules.RemindPassword(this);
+            document.title = this._title + ' - ' + 
+                    this.text('Titles_RemindPassword');
         });
         this._uris.remindPassword = this.pager.getPageUri('lb.remindPassword');
 
@@ -394,6 +397,8 @@ export default class System
 
             this._module_Layout.$holders.content.$view = 
                     new modules.ResetPassword(this);
+            document.title = this._title + ' - ' + 
+                    this.text('Titles_ResetPassword');
         });
         
         this.pager.page('lb.account', this._aliases.account, () => {
@@ -402,7 +407,8 @@ export default class System
 
             this.clear();
             this._setBodyModule(new modules.Body(this));
-            this._setPanelModule(new modules.Account(this));
+            this._setPanelModule(new modules.Account(this), this._title + ' - ' +
+                    this.text('Titles_Account'));
         });
         this._uris.account = this.pager.getPageUri('lb.account');
 
