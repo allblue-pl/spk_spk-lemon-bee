@@ -3,9 +3,12 @@
 
 <!-- Main menu panel -->
 <div class="lb-menu-tiles row">
-    <div _repeat="panels:panel" _show="panel.shortcut" class="col-xxl-3 col-xl-4 col-sm-6 $class">
+    <div _repeat="panels:panel" _show="panel.shortcut"
+            class="col-xxl-3 col-xl-4 col-sm-6 $class">
         <div class="card">
-            <a _elem="Buttons_Panel" class="btn btn-theme-primary lb-tile-main w-100" href="${lb.uris.base}${panel.alias}/">
+            <a _elem="Buttons_Panel" 
+                    class="btn btn-theme-primary lb-tile-main w-100" 
+                    href="${lb.uris.base}${panel.alias}/">
                 <$ _show="panel.image">
                     <img src="$panel.image" alt="$panel.title" />
                 </$>
@@ -15,9 +18,12 @@
             </a>
             <div class="card-body">
                 <div class="row g-2">
-                    <div _repeat="panel.subpanels:subpanel" _show="subpanel.shortcut" class="col">
-                        <a _elem="Buttons_Subpanel" href="$subpanel.uri" class="btn btn-theme-light w-100">
-                            <i class="fa $subpanel.faIcon pe-2"> </i>$subpanel.title
+                    <div _repeat="panel.subpanels:subpanel" 
+                            _show="subpanel.shortcut" class="col">
+                        <a _elem="Buttons_Subpanel" 
+                                href="$subpanel.uri" class="btn btn-theme-light w-100">
+                            <i class="fa $subpanel.faIcon pe-2"> </i>
+                            $subpanel.title
                         </a>
                     </div>
                 </div>

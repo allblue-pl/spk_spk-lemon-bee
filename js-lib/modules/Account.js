@@ -21,6 +21,11 @@ export default class Account extends spocky.Module
         this.l = system.createLayout($layouts.Account);        
         this.f = new spkForms.Form(this.l, 'ChangePassword');        
 
+        this.l.$elems.BackButton.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            system.pager.setPage('lb.main');
+        });
+        this.l.$fields.Uris.Main = system.pager.getPageUri('lb.main');
         this.l.$elems.changePassword.addEventListener('click', (evt) => {
             evt.preventDefault();
             this.changePassword();
