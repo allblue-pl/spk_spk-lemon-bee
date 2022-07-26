@@ -58,6 +58,12 @@ export default class LogIn extends spocky.Module
         this.lb.actions.logIn_Async(this.lForm.$elems.Login.value,
                 this.lForm.$elems.Password.value)
             .then((result) => {
+                js0.typeE(result, js0.Preset({
+                    user: [ js0.RawObject, js0.Null, js0.Default(null) ],
+                    error: [ 'string', js0.Null, js0.Default(null) ],
+                    reload: [ 'boolean', js0.Default(false) ],
+                }));
+
                 let user = {
                     loggedIn: false,
                     login: '',
@@ -76,8 +82,13 @@ export default class LogIn extends spocky.Module
                         message: '',
                     };
 
-                    this.lb.setUser(result.user);
-                    this.lb.pager.setPage('lb.main');
+                    if (result.reload) {
+                        window.location.reload();
+                        return;
+                    } else {
+                        this.lb.setUser(result.user);
+                        this.lb.pager.setPage('lb.main');
+                    }
                 } else {
                     this.lForm.$fields.error = {
                         show: true,
