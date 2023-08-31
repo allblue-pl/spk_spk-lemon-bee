@@ -3,9 +3,7 @@
 const
     abApi = require('web-ab-api'),
     js0 = require('js0'),
-    spocky = require('spocky'),
-
-    $layouts = require('../$layouts')
+    spocky = require('spocky')
 ;
 
 export default class LogIn extends spocky.Module
@@ -17,8 +15,8 @@ export default class LogIn extends spocky.Module
 
         this.lb = system;
 
-        this.l = system.createLayout($layouts.LogIn);
-        this.lForm = system.createLayout($layouts.LogIn_Form);
+        this.l = system.createLayout(this.lb.layouts.LogIn);
+        this.lForm = system.createLayout(this.lb.layouts.LogIn_Form);
 
         this.lForm.$elems.Form.addEventListener('submit', (evt) => {
             evt.preventDefault();

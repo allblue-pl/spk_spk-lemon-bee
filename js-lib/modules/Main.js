@@ -2,9 +2,7 @@
 
 const
     js0 = require('js0'),
-    spocky = require('spocky'),
-
-    $layouts = require('../$layouts')
+    spocky = require('spocky')
 ;
 
 export default class Main extends spocky.Module 
@@ -16,7 +14,7 @@ export default class Main extends spocky.Module
 
         this.panels = system.getPanels();
 
-        let l = system.createLayout($layouts.Main);        
+        let l = system.createLayout(system.layouts.Main);        
         l.$fields.panels = this.panels;
 
         l.$elems.Buttons_Panel((elem, keys) => {

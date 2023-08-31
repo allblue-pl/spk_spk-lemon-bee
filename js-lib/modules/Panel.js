@@ -1,9 +1,7 @@
 'use strict';
 
 const
-    spocky = require('spocky'),
-
-    $layouts = require('../$layouts')
+    spocky = require('spocky')
 ;
 
 export default class Panel extends spocky.Module
@@ -13,7 +11,7 @@ export default class Panel extends spocky.Module
     { super();
         js0.args(arguments, require('../System'), 'object');
 
-        let l = system.createLayout($layouts.Panel);
+        let l = system.createLayout(system.layouts.Panel);
         l.$fields.panel = panel;
 
         this.$view = l;

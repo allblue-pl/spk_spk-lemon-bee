@@ -3,9 +3,7 @@
 const
     abApi = require('web-ab-api'),
     js0 = require('js0'),
-    spocky = require('spocky'),
-
-    $layouts = require('../$layouts')
+    spocky = require('spocky')
 ;
 
 export default class ResetPassword extends spocky.Module
@@ -17,7 +15,7 @@ export default class ResetPassword extends spocky.Module
 
         this.lb = system;
 
-        this.l = system.createLayout($layouts.ResetPassword);
+        this.l = system.createLayout(this.lb.layouts.ResetPassword);
         
         this.l.$elems.Form.addEventListener('submit', (evt) => {
             evt.preventDefault();

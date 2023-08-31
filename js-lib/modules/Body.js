@@ -3,9 +3,7 @@
 const
     js0 = require('js0'),
     spocky = require('spocky'),
-    webABApi = require('web-ab-api'),
-
-    $layouts = require('../$layouts')
+    webABApi = require('web-ab-api')
 ;
 
 export default class Body extends spocky.Module
@@ -15,11 +13,11 @@ export default class Body extends spocky.Module
     { super();
         js0.args(arguments, require('../System'));
 
-        this.system = system;
+        this.lb = system;
 
         this._listeners_OnBack = null;
 
-        let l = system.createLayout($layouts.Body);
+        let l = system.createLayout(this.lb.layouts.Body);
         this.lMenu = this._getMenuLayout();
         this.lUserInfo = this._getUserInfoLayout();
 
@@ -67,15 +65,15 @@ export default class Body extends spocky.Module
 
     _getMenuLayout()
     {
-        let l = this.system.createLayout($layouts.TopMenu);
+        let l = this.lb.createLayout(this.lb.layouts.TopMenu);
 
         l.$fields.hasBackButton = false;
 
-        let panels = this.system.getPanels();
+        let panels = this.lb.getPanels();
 
         l.$elems.menuItem_Home.addEventListener('click', (evt) => {
             evt.preventDefault();
-            this.system.pager.setPage('lb.main');
+            this.lb.pager.setPage('lb.main');
         });
         l.$elems.menuItems_Panel((elem, keys) => {
             elem.addEventListener('click', (evt) => {
@@ -86,7 +84,7 @@ export default class Body extends spocky.Module
                     $(l.$elems.Menu).collapse('hide');
                     panel.menu.action();
                 } else
-                    this.system.pager.setUri(l.$fields.menuItems(keys[0]).uri);
+                    this.lb.pager.setUri(l.$fields.menuItems(keys[0]).uri);
             });
         });
         l.$elems.BackButton.addEventListener('click', (evt) => {
@@ -105,7 +103,7 @@ export default class Body extends spocky.Module
 
             items.set(i, {
                 uri: panel.menu.uri === null ?
-                        `${this.system.uris.base}${panel.alias}/` :
+                        `${this.lb.uris.base}${panel.alias}/` :
                         panel.menu.uri,
                 title: panel.title,
                 faIcon: panel.faIcon,
@@ -116,7 +114,7 @@ export default class Body extends spocky.Module
         /* User Info */
         l.$elems.LogOut.addEventListener('click', (evt) => {
             evt.preventDefault();
-            this.system.logOut();
+            this.lb.logOut();
         });
 
         return l;
@@ -124,9 +122,9 @@ export default class Body extends spocky.Module
 
     _getUserInfoLayout()
     {
-        let l = this.system.createLayout($layouts.UserInfo);
+        let l = this.lb.createLayout(this.lb.layouts.UserInfo);
 
-        l.$fields.lb = this.system.getFields();
+        l.$fields.lb = this.lb.getFields();
 
         return l;
     }

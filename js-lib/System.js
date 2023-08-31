@@ -17,6 +17,14 @@ export default class System
         return this._actions;
     }
 
+    get body() {
+        return this._mBody;
+    }
+
+    get layouts() {
+        return this._layouts;
+    }
+
     get module() {
         if (!this._initialized)
             throw new Error('LemonBee system not initialized.');
@@ -282,11 +290,25 @@ export default class System
                 email: [ 'string', js0.Default('') ],
                 login: [ 'string', js0.Default('') ],
                 password: [ 'string', js0.Default('') ],
-            }), js0.Default({}) ],
+            }), js0.Default({}), ],
             images: js0.Preset({
                 logo: [ 'string', js0.Null, js0.Default(null), ],
                 logo_Main: [ 'string', js0.Null, js0.Default(null), ],
             }),
+            layouts: [ js0.Preset({
+                'Account': [ 'function', js0.Default($layouts.Account), ],
+                'Body': [ 'function', js0.Default($layouts.Body), ],
+                'LogIn': [ 'function', js0.Default($layouts.LogIn), ],
+                'LogIn_Form': [ 'function', 
+                        js0.Default($layouts.LogIn_Form), ],
+                'Main': [ 'function', js0.Default($layouts.Main), ],
+                'RemindPassword': [ 'function', 
+                        js0.Default($layouts.RemindPassword), ],
+                'ResetPassword': [ 'function', 
+                        js0.Default($layouts.ResetPassword), ],
+                'TopMenu': [ 'function', js0.Default($layouts.TopMenu), ],
+                'UserInfo': [ 'function', js0.Default($layouts.UserInfo), ],
+            }), js0.Default({}), ],  
             panels: this.panels_Preset,
             shows: [ js0.Preset({
                 userInfo: [ 'boolean', js0.Default(true) ],
@@ -308,6 +330,7 @@ export default class System
         this._aliases = presets.aliases;
         this._dev = presets.dev;
         this._images = presets.images;
+        this._layouts = presets.layouts;
         this._settings = presets.settings;
         this._shows = presets.shows;
         this._textFn = presets.textFn;

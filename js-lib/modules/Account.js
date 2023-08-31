@@ -4,9 +4,7 @@ const
     js0 = require('js0'),
     spkForms = require('spk-forms'),
     spocky = require('spocky'),
-    webABApi = require('web-ab-api'),
-
-    $layouts = require('../$layouts')
+    webABApi = require('web-ab-api')
 ;
 
 export default class Account extends spocky.Module
@@ -18,7 +16,7 @@ export default class Account extends spocky.Module
 
         this.system = system;
 
-        this.l = system.createLayout($layouts.Account);        
+        this.l = system.createLayout(system.layouts.Account);        
         this.f = new spkForms.Form(this.l, 'ChangePassword');        
 
         this.l.$elems.BackButton.addEventListener('click', (evt) => {
