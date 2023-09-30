@@ -20,7 +20,7 @@
         <div _elem="Menu" class="collapse navbar-collapse" 
                 id="collapsibleNavbar">
             <ul class="navbar-nav clearfix">
-                <li class="nav-item">
+                <li _show="lb.shows.home" class="nav-item">
                     <a _elem="menuItem_Home" class="nav-link" 
                             href="$lb.uris.base">
                         <i class="fa fa-home" aria-hidden="true"></i>&nbsp;
@@ -33,6 +33,9 @@
                             href="$item.uri">
                         <$ _show="item.faIcon">
                             <i class="$item.faIcon"></i>&nbsp;
+                        </$>
+                        <$ _show="item.image">
+                            <i class="$item.image"></i>&nbsp;
                         </$>
                         $item.title
                     </a>

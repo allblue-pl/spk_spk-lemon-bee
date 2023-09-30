@@ -99,8 +99,8 @@ export default class LogIn extends spocky.Module
             .catch((e) => {
                 console.error(e.stack);
                 this.lb.msgs.showMessage_Failure(e.toString());
+                this.lb.msgs.hideLoading();
             });
-
 
         // abApi.json(`${this.lb.uris.api}log-in`, {
         //     Login: this.lForm.$elems.login.value,

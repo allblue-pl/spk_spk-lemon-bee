@@ -107,6 +107,7 @@ export default class Body extends spocky.Module
                         panel.menu.uri,
                 title: panel.title,
                 faIcon: panel.faIcon,
+                image: panel.image,
             });
         }
         l.$fields.menuItems = items;

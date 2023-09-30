@@ -128,7 +128,22 @@ export default class System
 
         this._mBody = null;
 
-        this._listeners_OnPage = null;
+        this._listeners_BeforePage = [];
+        this._listeners_AfterPage = [];
+    }
+
+    addListener_AfterPage(listener)
+    {
+        js0.args(arguments, 'function');
+
+        this._listeners_AfterPage.push(listener);
+    }
+
+    addListener_BeforePage(listener)
+    {
+        js0.args(arguments, 'function');
+
+        this._listeners_BeforePage.push(listener);
     }
 
     call_OnBack()
@@ -239,13 +254,6 @@ export default class System
         this._mBody.setListener_OnBack(listener);
     }
 
-    setListener_OnPage(listener)
-    {
-        js0.args(arguments, 'function');
-
-        this._listeners_OnPage = listener;
-    }
-
     setPanels(panels)
     {
         js0.args(arguments, this.panels_Preset);
@@ -254,6 +262,8 @@ export default class System
 
         for (let panel of panels)
             this._addPanel(panel);
+
+        this.setup_Pager();
     }
 
     setUser(user)
@@ -311,7 +321,8 @@ export default class System
             }), js0.Default({}), ],  
             panels: this.panels_Preset,
             shows: [ js0.Preset({
-                userInfo: [ 'boolean', js0.Default(true) ],
+                home: [ 'boolean', js0.Default(true), ],
+                userInfo: [ 'boolean', js0.Default(true), ],
             }), js0.Default({}) ],
             textFn: 'function',
             title: [ 'string', js0.Default('LemonBee') ],
@@ -354,7 +365,6 @@ export default class System
         this._uris.logOut = this._uris.base;
 
         this.setPanels(presets.panels);
-        this.setup_Pager();
 
         // this.msgs = spkMessages;
         
@@ -363,19 +373,24 @@ export default class System
 
     setup_Pager()
     {
-        this.pager.page('lb.main', this._aliases.main, () => {
-            if (this._listeners_OnPage !== null)
-                this._listeners_OnPage();
+        this.pager.page('lb.main', this._aliases.main, 
+                (page, source, pageArgs) => {
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
 
             this.clear();
             this._setBodyModule(new modules.Body(this));
             this._setPanelModule(new modules.Main(this), this._title);
+
+            for (let listener of this._listeners_AfterPage)
+                listener(page, source, pageArgs);
         });
         this._uris.main = this.pager.getPageUri('lb.main');
 
-        this.pager.page('lb.logIn', this._aliases.logIn, () => {
-            if (this._listeners_OnPage !== null)
-                this._listeners_OnPage();
+        this.pager.page('lb.logIn', this._aliases.logIn, 
+                (page, source, pageArgs) => {
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
 
             this.clear();
 
@@ -386,11 +401,15 @@ export default class System
 
             this._module_Layout.$holders.content.$view = new modules.LogIn(this);
             document.title = this._title + ' - ' + this.text('Titles_LogIn');
+
+            for (let listener of this._listeners_AfterPage)
+                listener(page, source, pageArgs);
         });
 
-        this.pager.page('lb.remindPassword', this._aliases.remindPassword, () => {
-            if (this._listeners_OnPage !== null)
-                this._listeners_OnPage();
+        this.pager.page('lb.remindPassword', this._aliases.remindPassword, 
+                (page, source, pageArgs) => {
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
 
             this.clear();
 
@@ -403,13 +422,16 @@ export default class System
                     new modules.RemindPassword(this);
             document.title = this._title + ' - ' + 
                     this.text('Titles_RemindPassword');
+
+            for (let listener of this._listeners_AfterPage)
+                listener(page, source, pageArgs);
         });
         this._uris.remindPassword = this.pager.getPageUri('lb.remindPassword');
 
         this.pager.page('lb.resetPassword', this._aliases.resetPassword + 
-                '/:resetPasswordHash', () => {
-            if (this._listeners_OnPage !== null)
-                this._listeners_OnPage();
+                '/:resetPasswordHash', (page, source, pageArgs) => {
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
 
             this.clear();
 
@@ -422,23 +444,31 @@ export default class System
                     new modules.ResetPassword(this);
             document.title = this._title + ' - ' + 
                     this.text('Titles_ResetPassword');
+
+            for (let listener of this._listeners_AfterPage)
+                listener(page, source, pageArgs);
         });
         
-        this.pager.page('lb.account', this._aliases.account, () => {
-            if (this._listeners_OnPage !== null)
-                this._listeners_OnPage();
+        this.pager.page('lb.account', this._aliases.account, 
+                (page, source, pageArgs) => {
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
 
             this.clear();
             this._setBodyModule(new modules.Body(this));
             this._setPanelModule(new modules.Account(this), this._title + ' - ' +
                     this.text('Titles_Account'));
+
+            for (let listener of this._listeners_AfterPage)
+                listener(page, source, pageArgs);
         });
         this._uris.account = this.pager.getPageUri('lb.account');
 
         for (let [ panelName, panel ] of this._panels) {
-            this.pager.page(`lb.panels.${panel.name}`, panel.alias, () => {
-                if (this._listeners_OnPage !== null)
-                    this._listeners_OnPage();
+            this.pager.page(`lb.panels.${panel.name}`, panel.alias, 
+                    (page, source, pageArgs) => {
+                for (let listener of this._listeners_BeforePage)
+                    listener(page, source, pageArgs);
 
                 if (panel.subpanels.size === 0)
                     throw new Error(`No subpanels in panel '${panelName}'.`);
@@ -448,6 +478,10 @@ export default class System
                 this.clear();
                 this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`, {}, {}, false);
                 // window.location = `${this._uris.base}${panel.alias}/${defaultSubpanel.alias}`;
+
+                // No AfterPage listeners if redirected.
+                // for (let listener of this._listeners_AfterPage)
+                //     listener(page, source, pageArgs);
             });
 
             for (let [ subpanelName, subpanel ] of panel.subpanels) {
@@ -455,9 +489,10 @@ export default class System
                     continue;
 
                 this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
-                        `${panel.alias}/${subpanel.alias}`, () => {
-                    if (this._listeners_OnPage !== null)
-                        this._listeners_OnPage();
+                        `${panel.alias}/${subpanel.alias}`, 
+                        (page, source, pageArgs) => {
+                    for (let listener of this._listeners_BeforePage)
+                        listener(page, source, pageArgs);
 
                     this.clear();
 
@@ -470,6 +505,9 @@ export default class System
 
                     this._setPanelModule(module, panel.title + ' - ' +
                             subpanel.title);
+
+                    for (let listener of this._listeners_AfterPage)
+                        listener(page, source, pageArgs);
                 });
             }
         }
