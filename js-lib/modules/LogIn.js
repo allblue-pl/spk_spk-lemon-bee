@@ -98,7 +98,8 @@ export default class LogIn extends spocky.Module
             })
             .catch((e) => {
                 console.error(e.stack);
-                this.lb.msgs.showMessage_Failure(e.toString());
+                this.lb.msgs.showMessage_Failure(this.lb.text('Errors_CannotLogIn'), 
+                        e.toString());
                 this.lb.msgs.hideLoading();
             });
 
