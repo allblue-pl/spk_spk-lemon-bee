@@ -21,13 +21,25 @@
 }
 
  .btn-theme-light {
-    color: $text-main !important;
-    @include button-variant($gray-100, darken($gray-100, 15));
+    @include button-variant(
+        $gray-100,
+        darken($gray-100, 10),
+        $text-main,
+
+        darken($gray-100, 5),
+        darken($gray-100, 15),
+        $text-main,
+
+        darken($gray-100, 10),
+        darken($gray-100, 20),
+        $text-main,
+        
+        );
 }
-.btn-theme-light:active, .btn-theme-light.active {
-    color: #fff !important;
-    @include button-variant(lighten($text-main, 8), $text-main);
-}
+// .btn-theme-light:active, .btn-theme-light.active {
+//     color: #fff !important;
+//     @include button-variant(lighten($text-main, 8), $text-main);
+// }
 
  .btn-theme-primary {
     color: #fff!important;

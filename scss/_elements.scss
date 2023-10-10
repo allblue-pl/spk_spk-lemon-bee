@@ -84,7 +84,7 @@
 	text-align: right;
 	line-height: $lb-top-bar-height;
 	color: $lb-blue-light;
-	a {
+	a:not(.btn) {
 		color: #fff;
 	}
 	i {
