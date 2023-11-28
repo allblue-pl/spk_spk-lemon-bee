@@ -476,7 +476,9 @@ export default class System
                 let defaultSubpanel = panel.subpanels.values().next().value;
 
                 this.clear();
-                this.pager.setPage(`lb.subpanels.${panel.name}.${defaultSubpanel.name}`, {}, {}, false);
+                this.pager.setPage(
+                        `lb.subpanels.${panel.name}.${defaultSubpanel.name}`, 
+                        {}, {}, false);
                 // window.location = `${this._uris.base}${panel.alias}/${defaultSubpanel.alias}`;
 
                 // No AfterPage listeners if redirected.
@@ -497,7 +499,7 @@ export default class System
                     this.clear();
 
                     this._setBodyModule(new modules.Body(this));
-                    let module = subpanel.moduleFn(this);
+                    let module = subpanel.moduleFn(this, page, source, pageArgs);
                     if (!js0.type(module, spocky.Module)) {
                         throw new Error(`'moduleFn' of subpanel ` + 
                                 `'${panel.name}.${subpanel.name}' does not return spocky.Module`);

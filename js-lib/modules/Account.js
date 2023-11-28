@@ -47,6 +47,8 @@ export default class Account extends spocky.Module
                         errors: [ this.system.text('Errors_PasswordCannotBeEmpty') ],
                     },
                 },
+                state: '',
+                errors: [],
             });
             return false;
         }
@@ -60,6 +62,8 @@ export default class Account extends spocky.Module
                         errors: [ this.system.text('Errors_PasswordsDoNotMatch') ],
                     },
                 },
+                state: '',
+                errors: [],
             });
             return false;
         }
