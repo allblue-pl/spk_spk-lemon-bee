@@ -465,8 +465,12 @@ export default class System
         this._uris.account = this.pager.getPageUri('lb.account');
 
         for (let [ panelName, panel ] of this._panels) {
+            if (panel.subpanels.size === 0)
+                continue;
+
             this.pager.page(`lb.panels.${panel.name}`, panel.alias, 
                     (page, source, pageArgs) => {
+
                 for (let listener of this._listeners_BeforePage)
                     listener(page, source, pageArgs);
 
