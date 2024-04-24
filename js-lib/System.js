@@ -148,6 +148,9 @@ export default class System
 
     call_OnBack()
     {
+        if (this._mBody === null)
+            return false;
+
         if (this._mBody.call_OnBack())
             return true;
 
