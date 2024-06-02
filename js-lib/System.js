@@ -21,6 +21,10 @@ export default class System
         return this._mBody;
     }
 
+    get defaultPageName() {
+        return this._defaultPageName;
+    }
+
     get layouts() {
         return this._layouts;
     }
@@ -96,18 +100,20 @@ export default class System
         this._initialized = false;
 
         /* Presets */
-        this._aliases = {
-            main: '',
-            logIn: 'log-in',
-        };
-        this._images = {};
-        this._shows = {
-            userInfo: true,
-        };
+        this._actions = null;
+        this._aliases = null;
+        this._dev = null;
+        this._defaultPageName = 'lb.main';
+        this._defaultPageNames = null;
+        this._images = null;
+        this._layouts = null;
+        this._settings = null;
+        this._shows = null;
+        this._title = null;
         this._textFn = null;
-        this._uris = {
-            base: pager.base,
-        };
+        this._uris = null;
+        /* / Presets */
+
         this._user = {
             loggedIn: false,
             permissions: [],
@@ -304,6 +310,7 @@ export default class System
                 login: [ 'string', js0.Default('') ],
                 password: [ 'string', js0.Default('') ],
             }), js0.Default({}), ],
+            defaultPageNames: [ js0.ArrayItems('string'), js0.Default([ 'lb.main' ]) ],
             images: js0.Preset({
                 logo: [ 'string', js0.Null, js0.Default(null), ],
                 logo_Main: [ 'string', js0.Null, js0.Default(null), ],
@@ -343,6 +350,7 @@ export default class System
         this._actions = presets.actions;
         this._aliases = presets.aliases;
         this._dev = presets.dev;
+        this._defaultPageNames = presets.defaultPageNames;
         this._images = presets.images;
         this._layouts = presets.layouts;
         this._settings = presets.settings;
@@ -398,7 +406,8 @@ export default class System
             this.clear();
 
             if (this._user.loggedIn) {               
-                this.pager.setPage('lb.main');
+                // this.pager.setPage('lb.main');
+                this.pager.setPage(this._defaultPageName);
                 return;
             }
 
@@ -417,7 +426,8 @@ export default class System
             this.clear();
 
             if (this._user.loggedIn) {               
-                this.pager.setPage('lb.main');
+                // this.pager.setPage('lb.main');
+                this.pager.setPage(this._defaultPageName);
                 return;
             }
 
@@ -439,7 +449,8 @@ export default class System
             this.clear();
 
             if (this._user.loggedIn) {               
-                this.pager.setPage('lb.main');
+                // this.pager.setPage('lb.main');
+                this.pager.setPage(this._defaultPageName);
                 return;
             }
 
@@ -520,6 +531,16 @@ export default class System
                 });
             }
         }
+
+        this._defaultPageName = 'lb.main';
+        for (let pageName of this._defaultPageNames) {
+            if (this.pager.hasPage(pageName)) {
+                this._defaultPageName = pageName;
+                break;
+            }
+        }
+
+        this._uris.default = this.pager.getPageUri(this._defaultPageName);
     }
 
     init()

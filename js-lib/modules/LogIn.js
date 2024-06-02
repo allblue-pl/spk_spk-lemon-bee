@@ -85,7 +85,7 @@ export default class LogIn extends spocky.Module
                         return;
                     } else {
                         this.lb.setUser(result.user);
-                        this.lb.pager.setPage('lb.main');
+                        this.lb.pager.setPage(this.lb.defaultPageName);
                     }
                 } else {
                     this.lForm.$fields.error = {
