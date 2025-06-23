@@ -25,6 +25,14 @@ export default class System
         return this._layouts;
     }
 
+    get isLocked() {
+        return this._locked;
+    }
+
+    get mainFn() {
+        return this._mainFn;
+    }
+
     get module() {
         if (!this._initialized)
             throw new Error('LemonBee system not initialized.');
@@ -93,11 +101,11 @@ export default class System
     }
 
 
-    constructor(pager, msgs)
-    {
+    constructor(pager, msgs) {
         js0.args(arguments, abPager.Pager, spkMessages.Messages)
 
         this._initialized = false;
+        this._locked = false;
 
         /* Presets */
         this._actions = null;
@@ -108,6 +116,7 @@ export default class System
         this._setDefaultPageFn = () => {
             this.pager.setPage('lb.main');
         };
+        this._mainFn = null;
         this._settings = null;
         this._shows = null;
         this._title = null;
@@ -135,56 +144,49 @@ export default class System
 
         this._mBody = null;
 
-        this._listeners_BeforePage = [];
         this._listeners_AfterPage = [];
+        this._listeners_BeforePage = [];
+        this._listeners_OnBack = null;
     }
 
-    addListener_AfterPage(listener)
-    {
+    addListener_AfterPage(listener) {
         js0.args(arguments, 'function');
 
         this._listeners_AfterPage.push(listener);
     }
 
-    addListener_BeforePage(listener)
-    {
+    addListener_BeforePage(listener) {
         js0.args(arguments, 'function');
 
         this._listeners_BeforePage.push(listener);
     }
 
-    call_OnBack()
-    {
-        if (this._mBody === null)
+    call_OnBack() {
+        if (this._locked)
+            return true;
+
+        if (this._listeners_OnBack === null)
             return false;
 
-        if (this._mBody.call_OnBack())
+        if (js0.rtn('boolean', this._listeners_OnBack()))
             return true;
-
-        if (this.pager.current.name !== 'lb.main') {
-            this.pager.setPage('lb.main');
-            return true;
-        }
 
         return false;
     }
 
-    clear()
-    {
+    clear() {
         this._mBody = null;
         // this.msgs.hide();
     }
 
-    createLayout(layoutClass)
-    {
+    createLayout(layoutClass) {
         let l = new layoutClass();
         l.$fields.lb = this.getFields();
 
         return l;
     }
 
-    getFields()
-    {
+    getFields() {
         return {
             dev: this._dev,
             images: this._images,
@@ -198,8 +200,7 @@ export default class System
         };
     }
 
-    getPanels()
-    {
+    getPanels() {
         let allowedPanels = [];
         for (let [ panelName, panel ] of this._panels) {
             let allowed = true;
@@ -219,8 +220,11 @@ export default class System
         return allowedPanels;
     }
 
-    logOut()
-    {
+    lock() {
+        this._locked = true;
+    }
+
+    logOut() {
         this.msgs.showLoading();
         this.actions.logOut_Async()
             .then((result) => {
@@ -247,8 +251,7 @@ export default class System
             });
     }
 
-    setBackButton(hasBackButton)
-    {
+    setBackButton(hasBackButton) {
         js0.args(arguments, 'boolean');
 
         if (this._mBody === null)
@@ -257,15 +260,13 @@ export default class System
         this._mBody.lMenu.$fields.HasBackButton = hasBackButton;
     }
 
-    setListener_OnBack(listener)
-    {
+    setListener_OnBack(listener) {
         js0.args(arguments, 'function');
 
-        this._mBody.setListener_OnBack(listener);
+        this._listeners_OnBack = listener;
     }
 
-    setPanels(panels)
-    {
+    setPanels(panels) {
         js0.args(arguments, this.panels_Preset);
 
         this._panels.clear();
@@ -276,8 +277,7 @@ export default class System
         this.setup_Pager();
     }
 
-    setUser(user)
-    {
+    setUser(user) {
         js0.args(arguments, js0.RawObject);
         js0.typeE(user, js0.Preset({
             loggedIn: 'boolean',                
@@ -288,8 +288,7 @@ export default class System
         this._user = user;
     }
 
-    setup(presets)
-    {
+    setup(presets) {
         js0.args(arguments, js0.RawObject);
         js0.typeE(presets, js0.Preset({
             actions: js0.Preset({
@@ -330,6 +329,7 @@ export default class System
                 'TopMenu': [ 'function', js0.Default($layouts.TopMenu), ],
                 'UserInfo': [ 'function', js0.Default($layouts.UserInfo), ],
             }), js0.Default({}), ],  
+            mainFn: [ 'function', js0.Null, js0.Default(null) ],
             panels: this.panels_Preset,
             shows: [ js0.Preset({
                 home: [ 'boolean', js0.Default(true), ],
@@ -353,6 +353,7 @@ export default class System
         this._dev = presets.dev;
         this._images = presets.images;
         this._layouts = presets.layouts;
+        this._mainFn = presets.mainFn;
         this._settings = presets.settings;
         this._shows = presets.shows;
         this._textFn = presets.textFn;
@@ -385,10 +386,14 @@ export default class System
         // this._module_Layout.$holders.msgs.$view = this.msgs;
     }
 
-    setup_Pager()
-    {
+    setup_Pager() {
         this.pager.page('lb.main', this._aliases.main, 
                 (page, source, pageArgs) => {
+            if (!this._user.loggedIn) {
+                this.pager.setPage('lb.logIn', {}, {}, false);
+                return;
+            }
+
             for (let listener of this._listeners_BeforePage)
                 listener(page, source, pageArgs);
 
@@ -403,16 +408,16 @@ export default class System
 
         this.pager.page('lb.logIn', this._aliases.logIn, 
                 (page, source, pageArgs) => {
-            for (let listener of this._listeners_BeforePage)
-                listener(page, source, pageArgs);
-
-            this.clear();
-
             if (this._user.loggedIn) {               
                 // this.pager.setPage('lb.main');
                 this._setDefaultPageFn();
                 return;
             }
+
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
+
+            this.clear();
 
             this._module_Layout.$holders.content.$view = new modules.LogIn(this);
             document.title = this._title + ' - ' + this.text('Titles_LogIn');
@@ -423,16 +428,16 @@ export default class System
 
         this.pager.page('lb.remindPassword', this._aliases.remindPassword, 
                 (page, source, pageArgs) => {
-            for (let listener of this._listeners_BeforePage)
-                listener(page, source, pageArgs);
-
-            this.clear();
-
             if (this._user.loggedIn) {               
                 // this.pager.setPage('lb.main');
                 this._setDefaultPageFn();
                 return;
             }
+
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
+
+            this.clear();
 
             this._module_Layout.$holders.content.$view = 
                     new modules.RemindPassword(this);
@@ -446,16 +451,16 @@ export default class System
 
         this.pager.page('lb.resetPassword', this._aliases.resetPassword + 
                 '/:resetPasswordHash', (page, source, pageArgs) => {
-            for (let listener of this._listeners_BeforePage)
-                listener(page, source, pageArgs);
-
-            this.clear();
-
-            if (this._user.loggedIn) {               
+             if (this._user.loggedIn) {               
                 // this.pager.setPage('lb.main');
                 this._setDefaultPageFn();
                 return;
             }
+    
+            for (let listener of this._listeners_BeforePage)
+                listener(page, source, pageArgs);
+
+            this.clear();
 
             this._module_Layout.$holders.content.$view = 
                     new modules.ResetPassword(this);
@@ -468,6 +473,11 @@ export default class System
         
         this.pager.page('lb.account', this._aliases.account, 
                 (page, source, pageArgs) => {
+            if (!this._user.loggedIn) {
+                this.pager.setPage('lb.logIn', {}, {}, false);
+                return;
+            }
+
             for (let listener of this._listeners_BeforePage)
                 listener(page, source, pageArgs);
 
@@ -514,6 +524,12 @@ export default class System
                 this.pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
                         `${panel.alias}/${subpanel.alias}`, 
                         (page, source, pageArgs) => {
+                    if (!this._user.loggedIn) {
+                        this.pager.setPage('lb.logIn', {}, {}, false);
+                        // window.location = this._uris.base + this._aliases.logIn;
+                        return;
+                    }
+
                     for (let listener of this._listeners_BeforePage)
                         listener(page, source, pageArgs);
 
@@ -536,19 +552,36 @@ export default class System
         }
     }
 
-    init()
-    {
+    init() {
+        this.pager.setListener_OnBeforePopState((uri) => {
+            if (this._locked) {
+                window.location = uri;
+                return false;
+            }
+
+            return true;
+        });
+
+        window.onbeforeunload = (evt) => {
+            if (this._locked)
+                return true;
+
+            return null;
+        };
+
         this._initialized = true;
     }
 
-    text(text)
-    {
+    text(text) {
         return this._textFn(text);
     }
 
+    unlock() {
+        this._locked = false;
+    }
 
-    _addPanel(panel)
-    {
+
+    _addPanel(panel) {
         let pPanel = {};
         for (let pKey in panel) {
             if (pKey === 'subpanels') {
@@ -576,21 +609,13 @@ export default class System
         this._panels.set(panel.name, pPanel);
     }
 
-    _setBodyModule(module)
-    {
+    _setBodyModule(module) {
         this._mBody = module;
     }
 
-    _setPanelModule(module, title = null)
-    {
+    _setPanelModule(module, title = null) {
         if (this._mBody === null)
             throw new Error('Body module not set.');
-
-        if (!this._user.loggedIn) {
-            this.pager.setPage('lb.logIn', {}, {}, false);
-            // window.location = this._uris.base + this._aliases.logIn;
-            return;
-        }
 
         this._mBody.setContent(module);
 

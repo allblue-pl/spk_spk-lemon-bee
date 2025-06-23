@@ -10,8 +10,7 @@ const
 export default class Account extends spocky.Module
 {
 
-    constructor(system)
-    { super();
+    constructor(system) { super();
         js0.args(arguments, require('../System'));
 
         this.system = system;
@@ -34,8 +33,7 @@ export default class Account extends spocky.Module
         this.$view = this.l;
     }
 
-    checkNewPassword()
-    {
+    checkNewPassword() {
         let fields = this.f.getValues();
 
         if (fields.NewPassword === '') {
@@ -71,8 +69,7 @@ export default class Account extends spocky.Module
         return true;
     }
 
-    changePassword()
-    {
+    changePassword() {
         this.message_Clear();
 
         if (!this.checkNewPassword())
@@ -99,20 +96,17 @@ export default class Account extends spocky.Module
             });
     }
 
-    message_Clear()
-    {
+    message_Clear() {
         this.l.$fields.message = null;
         this.l.$fields.messageType = 'dark';
     }
 
-    message_SetError(message)
-    {
+    message_SetError(message) {
         this.l.$fields.message = message;
         this.l.$fields.messageType = 'danger';
     }
 
-    message_SetSuccess(message)
-    {
+    message_SetSuccess(message) {
         this.l.$fields.message = message;
         this.l.$fields.messageType = 'success';
     }

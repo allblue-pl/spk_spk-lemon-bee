@@ -9,13 +9,10 @@ const
 export default class Body extends spocky.Module
 {
 
-    constructor(system)
-    { super();
+    constructor(system) { super();
         js0.args(arguments, require('../System'));
 
         this.lb = system;
-
-        this._listeners_OnBack = null;
 
         let l = system.createLayout(this.lb.layouts.Body);
         this.lMenu = this._getMenuLayout();
@@ -39,32 +36,14 @@ export default class Body extends spocky.Module
         this.$view = l;
     }
 
-    call_OnBack()
-    {
-        if (this._listeners_OnBack === null)
-            return false;
-
-        this._listeners_OnBack();
-        return true;
-    }
-
-    setContent(content)
-    {
+    setContent(content) {
         js0.args(arguments, [ spocky.Layout, spocky.Module ]);
 
         this.layout.$holders.content.$view = content;
     }
 
-    setListener_OnBack(listener)
-    {
-        js0.args(arguments, 'function');
 
-        this._listeners_OnBack = listener;
-    }
-
-
-    _getMenuLayout()
-    {
+    _getMenuLayout() {
         let l = this.lb.createLayout(this.lb.layouts.TopMenu);
 
         l.$fields.hasBackButton = false;
@@ -73,6 +52,8 @@ export default class Body extends spocky.Module
 
         l.$elems.menuItem_Home.addEventListener('click', (evt) => {
             evt.preventDefault();
+            if (this.lb.isLocked)
+                return;
             this.lb.pager.setPage('lb.main');
         });
         l.$elems.menuItems_Panel((elem, keys) => {
@@ -83,16 +64,16 @@ export default class Body extends spocky.Module
                 if (panel.menu.action !== null) {
                     $(l.$elems.Menu).collapse('hide');
                     panel.menu.action();
-                } else
+                } else {
+                    if (this.lb.isLocked)
+                        return;
                     this.lb.pager.setUri(l.$fields.menuItems(keys[0]).uri);
+                }
             });
         });
         l.$elems.BackButton.addEventListener('click', (evt) => {
             evt.preventDefault();
-            if (this._listeners_OnBack === null)
-                return;
-
-            this._listeners_OnBack();
+            this.lb.call_OnBack();
         });
 
         let items = new Map();
@@ -121,8 +102,7 @@ export default class Body extends spocky.Module
         return l;
     }
 
-    _getUserInfoLayout()
-    {
+    _getUserInfoLayout() {
         let l = this.lb.createLayout(this.lb.layouts.UserInfo);
 
         l.$fields.lb = this.lb.getFields();

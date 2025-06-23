@@ -8,8 +8,7 @@ const
 export default class Main extends spocky.Module 
 {
 
-    constructor(system) 
-    { super();
+    constructor(system)  { super();
         js0.args(arguments, require('../System'));
 
         this.panels = system.getPanels();
@@ -32,6 +31,9 @@ export default class Main extends spocky.Module
         });
 
         system.msgs.hideLoading();
+
+        if (system.mainFn !== null)
+            system.mainFn(this);
 
         this.$view = l;
     }

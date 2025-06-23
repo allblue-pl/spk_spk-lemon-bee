@@ -9,8 +9,7 @@ const
 export default class RemindPassword extends spocky.Module
 {
 
-    constructor(system)
-    { super();
+    constructor(system) { super();
         js0.args(arguments, require('../System'));
 
         this.lb = system;
@@ -27,16 +26,14 @@ export default class RemindPassword extends spocky.Module
         this.$view = this.l;
     }
 
-    clearError()
-    {
+    clearError() {
         this.lForm.$fields.error = {
             show: false,
             message: ''
         };
     }
 
-    remindPassword()
-    {
+    remindPassword() {
         this.lb.msgs.showLoading();
 
         this.lb.actions.remindPassword_Async(this.l.$elems.Login.value)

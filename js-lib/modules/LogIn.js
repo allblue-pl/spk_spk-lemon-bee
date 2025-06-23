@@ -9,8 +9,7 @@ const
 export default class LogIn extends spocky.Module
 {
 
-    constructor(system)
-    { super();
+    constructor(system) { super();
         js0.args(arguments, require('../System'));
 
         this.lb = system;
@@ -41,16 +40,14 @@ export default class LogIn extends spocky.Module
         this.$view = this.l;
     }
 
-    clearError()
-    {
+    clearError() {
         this.lForm.$fields.error = {
             show: false,
             message: ''
         };
     }
 
-    logIn()
-    {
+    logIn() {
         this.lb.msgs.showLoading();
 
         this.lb.actions.logIn_Async(this.lForm.$elems.Login.value,

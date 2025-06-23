@@ -9,8 +9,7 @@ const
 export default class ResetPassword extends spocky.Module
 {
 
-    constructor(system)
-    { super();
+    constructor(system) { super();
         js0.args(arguments, require('../System'));
 
         this.lb = system;
@@ -35,14 +34,12 @@ export default class ResetPassword extends spocky.Module
         this.$view = this.l;
     }
 
-    clearError()
-    {
+    clearError() {
         this.l.$fields.messageType = 'primary';
         this.l.$fields.message = null;
     }
 
-    resetPassword()
-    {
+    resetPassword() {
         if (this.l.$elems.NewPassword.value === '') {
             this.l.$fields.messageType = 'danger';
             this.l.$fields.message = this.lb.text('Errors_PasswordCannotBeEmpty');
