@@ -228,7 +228,7 @@ export default class System
         this.msgs.showLoading();
         this.actions.logOut_Async()
             .then((result) => {
-                if (!result.success) {
+                if (result.error !== null) {
                     this.msgs.showMessage_Failure(result.error);
                     this.msgs.hideLoading();
 
