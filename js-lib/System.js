@@ -6,8 +6,10 @@ const
     spkMessages = require('spk-messages'),
     spocky = require('spocky'),
 
-    $layouts = require('./$layouts'),
-    modules = require('./modules')
+    presets = require('./presets'),
+    modules = require('./modules'),
+
+    $layouts = require('./$layouts')
 ;
 
 export default class System
@@ -48,38 +50,7 @@ export default class System
     }
 
     get panels_Preset() {
-        return js0.Iterable(js0.Preset({
-            permissions: [ js0.Default([]), Array ],
-
-            name: 'string',
-            shortcut: [ 'boolean', js0.Default(true), ],
-            
-            menu: js0.Preset({
-                shortcut: [ 'boolean', js0.Default(true), ],
-                uri: [ 'boolean', js0.Null, js0.Default(null), ],
-                action: [ 'function', js0.Null, js0.Default(null), ],
-            }),
-
-            alias: 'string',
-            title: 'string',
-            faIcon: [ 'string', js0.Null, js0.Default(null), ],
-            image: [ 'string', js0.Null, js0.Default(null), ],
-            
-            subpanels: js0.Iterable(js0.Preset({
-                name: 'string',
-                moduleFn: [ 'function', js0.Null ],
-                uri: [ 'string', js0.Null, js0.Default(null), ],
-
-                permissions: [ js0.Default([]), Array ],
-
-                alias: 'string',
-                title: 'string',
-                faIcon: [ js0.Default(null), 'string' ],
-                image: [ js0.Default(null), 'string' ],    
-
-                shortcut: [ js0.Default(true), 'boolean' ],
-            })),
-        }))
+        return js0.Iterable(presets.panel);
     }
 
     get setDefaultPageFn() {
@@ -228,6 +199,8 @@ export default class System
         this.msgs.showLoading();
         this.actions.logOut_Async()
             .then((result) => {
+                js0.typeE(result, presets.logOutResult);
+
                 if (result.error !== null) {
                     this.msgs.showMessage_Failure(result.error);
                     this.msgs.hideLoading();

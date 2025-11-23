@@ -3,7 +3,9 @@
 const
     abApi = require('web-ab-api'),
     js0 = require('js0'),
-    spocky = require('spocky')
+    spocky = require('spocky'),
+
+    presets = require('../presets')
 ;
 
 export default class LogIn extends spocky.Module
@@ -53,11 +55,7 @@ export default class LogIn extends spocky.Module
         this.lb.actions.logIn_Async(this.lForm.$elems.Login.value,
                 this.lForm.$elems.Password.value)
             .then((result) => {
-                js0.typeE(result, js0.Preset({
-                    user: [ js0.RawObject, js0.Null, js0.Default(null) ],
-                    error: [ 'string', js0.Null, js0.Default(null) ],
-                    reload: [ 'boolean', js0.Default(false) ],
-                }));
+                js0.typeE(result, presets.logInResult);
 
                 let user = {
                     loggedIn: false,
