@@ -6,7 +6,11 @@ class presets_Class {
     get logInResult() { return js0.fn(
     js0.Preset_Type, () => {
         return js0.Preset({
-            user: [ js0.RawObject, js0.Null, js0.Default(null) ],
+            user: [ js0.Preset({
+                loggedIn: 'boolean',
+                login: 'string',
+                permissions: js0.ArrayItems('string'),
+            }), js0.Null, js0.Default(null) ],
             error: [ 'string', js0.Null, js0.Default(null) ],
             reload: [ 'boolean', js0.Default(false) ],
         });
