@@ -9,15 +9,18 @@ table {
 		color: #000;
 	}
 	thead {
-		background-color: $theme-primary;
 		color: #fff;
 		a {
 			color: #fff;
-			font-weight: normal!important;
+			font-weight: normal !important;
 		}
 		a:hover {
 			color: $gray-300;
 		}
+
+        th {
+            background-color: $theme-primary !important;
+        }
 	}
 	tr {
 		td.narrow {
@@ -36,12 +39,12 @@ table {
 /* Calnedar */
 .input-group {
 	table {
-		text-shadow: none!important;
+		text-shadow: none !important;
 		th {
 			border-radius: 0px;
 		}
 		th:hover {
-			background-color: darken($primary, 5%)!important;
+			background-color: darken($primary, 5%) !important;
 		}
 		td.active {
 			background-color: $lb-blue-light;

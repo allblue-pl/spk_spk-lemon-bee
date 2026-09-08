@@ -440,6 +440,7 @@ export default class LBSystem {
                 if (subpanel.moduleFn === null)
                     continue;
 
+                console.log("Subpanels:", `${panel.alias}/${subpanel.alias}`);
                 this.#pager.page(`lb.subpanels.${panel.name}.${subpanel.name}`, 
                         `${panel.alias}/${subpanel.alias}`, 
                         (page, source, pageArgs) => {
@@ -544,7 +545,7 @@ export default class LBSystem {
         let permissions = subpanel.permissions.slice();
         
         let uri = subpanel.uri;
-        if ((uri === null || uri === undefined) && subpanel.shortcut)
+        if ((uri === null || uri === undefined) && subpanel.shortcut && panel.shortcut)
             uri = this.#pager.parseUri(`${panel.alias}/${subpanel.alias}`);
 
         return ts0.assertType({
